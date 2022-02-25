@@ -17,7 +17,6 @@ namespace AVLTree
         public AVL()
         {
             root = null;
-            itemsKeyValue = new Dictionary<TKey, TValue>();
         }
 
         /// <summary>
@@ -39,8 +38,6 @@ namespace AVLTree
 
             if (root == null)
             {
-                itemsKeyValue.Add(key, value);
-
                 //Если дерево пусто, заменяем его на дерево с одним узлом newItem.
                 root = newItem;
                 root.height = 1;
@@ -66,8 +63,6 @@ namespace AVLTree
                     {
                         if (currentNode.left == null)
                         {
-                            itemsKeyValue.Add(key, value);
-
                             newItem.parent = currentNode;
                             currentNode.left = newItem;
                             currentNode.left.RecalculateHeight();
@@ -82,8 +77,6 @@ namespace AVLTree
                     {
                         if (currentNode.right == null)
                         {
-                            itemsKeyValue.Add(key, value);
-
                             newItem.parent = currentNode;
                             currentNode.right = newItem;
                             currentNode.right.RecalculateHeight();
