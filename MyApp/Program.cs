@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 using AVLTree;
@@ -11,14 +12,16 @@ namespace MyApp
     {
         static void Main(string[] args)
         {
-            AVL<int, int> avl = new AVL<int, int>();
+            AVL<int, string> avl = new AVL<int, string>();
 
-            for (int i = 0; i < 5; i++)
+            for (int i = 1; i <= 54 / 2; i++)
             {
-                avl.Insert(i, i);
+                int sign = (int)Math.Pow(-1, i);
+                int item = (int)((long)Math.Pow(5, i) % 162);
+                avl.Insert(sign * item, "a");
             }
 
-            BTreePrinter.Print(avl.root);
+            TreeNodePrinter.Print(avl.root);
 
             Console.ReadKey();
         }

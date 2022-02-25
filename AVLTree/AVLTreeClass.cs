@@ -25,9 +25,42 @@ namespace AVLTree
         public int Count { get; private set; } = 0;
 
         /// <summary>
-        /// Высота дерева от его корня.
+        /// Возвращает высоту дерева от корня.
         /// </summary>
-        public int Height { get => root == null ? 0 : root.height; private set { } }
+        public int Height()
+        {
+            if (root == null)
+            {
+                //throw new AVLTreeIsEmptyException();
+                return 0;
+            }
+
+            return root.height;
+        }
+
+        /// <summary>
+        /// Возвращает высоту выбранного поддерева. 
+        /// </summary>
+        public int Height(Node<TKey, TValue> node)
+        {
+            if (node == null)
+            {
+                //throw new AVLTreeIsEmptyException();
+                return 0;
+            }
+
+            return node.height;
+        }
+
+        public int GetBalance(Node<TKey, TValue> node)
+        {
+            if (node == null)
+            {
+                return 0;
+            }
+
+            return Math.Abs(Height(node.left) - Height(node.right));
+        }
 
         /// <summary>
         /// Добавление в дерево нового элемента.
@@ -131,19 +164,21 @@ namespace AVLTree
         }
 
         /// <summary>
-        /// Осуществляет поворот АВЛ-дерева налево.
+        /// Осуществляет поворот АВЛ-поддерева налево.
         /// </summary>
-        public void RotateLeft()
+        public Node<TKey, TValue> RotateLeft(Node<TKey, TValue> node)
         {
-            
+
+            return null;
         }
 
         /// <summary>
-        /// Осуществляет поворот АВЛ-дерева направо.
+        /// Осуществляет поворот АВЛ-поддерева направо.
         /// </summary>
-        public void RotateRight()
+        public Node<TKey, TValue> RotateRight(Node<TKey, TValue> node)
         {
 
+            return null;
         }
     }
 }

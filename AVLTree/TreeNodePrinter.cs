@@ -6,18 +6,17 @@ using System.Threading.Tasks;
 
 namespace AVLTree
 {
-    public static class BTreePrinter
+    internal class NodeInfo<TKey, TValue>
     {
-        class NodeInfo<TKey, TValue>
-        {
-            public Node<TKey, TValue> Node;
-            public string Text;
-            public int StartPos;
-            public int Size { get { return Text.Length; } }
-            public int EndPos { get { return StartPos + Size; } set { StartPos = value - Size; } }
-            public NodeInfo<TKey, TValue> Parent, Left, Right;
-        }
-
+        public Node<TKey, TValue> Node;
+        public string Text;
+        public int StartPos;
+        public int Size { get { return Text.Length; } }
+        public int EndPos { get { return StartPos + Size; } set { StartPos = value - Size; } }
+        public NodeInfo<TKey, TValue> Parent, Left, Right;
+    }
+    public static class TreeNodePrinter
+    {
         public static void Print<TKey, TValue>(this Node<TKey, TValue> root, int topMargin = 2, int leftMargin = 2)
         {
             if (root == null) return;

@@ -102,7 +102,7 @@ namespace xUnitAVLTree
         {
             AVL<int, string> avl = new AVL<int, string>();
 
-            Assert.Equal(0, avl.Height);
+            Assert.Equal(0, avl.Height());
         }
 
         //ѕри добавлении двух упор€доченных элементов в пустое дерево, высота должна увеличиватьс€
@@ -117,7 +117,7 @@ namespace xUnitAVLTree
             for (int i = 1; i < 3; ++i)
             {
                 avl.Insert(i, String.Empty);
-                Assert.Equal(i, avl.Height);
+                Assert.Equal(i, avl.Height());
             }
         }
 
@@ -135,7 +135,13 @@ namespace xUnitAVLTree
                 avl.Insert(i, String.Empty);
             }
 
-            Assert.Equal(2, avl.Height);
+            Assert.Equal(2, avl.Height());
+        }
+
+        [Fact]
+        public void Test12()
+        {
+
         }
     }
 }
