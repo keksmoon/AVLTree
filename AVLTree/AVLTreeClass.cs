@@ -59,7 +59,7 @@ namespace AVLTree
                 return 0;
             }
 
-            return Math.Abs(Height(node.left) - Height(node.right));
+            return Height(node.left) - Height(node.right);
         }
 
         /// <summary>
@@ -99,7 +99,7 @@ namespace AVLTree
                             newItem.parent = currentNode;
                             currentNode.left = newItem;
                             currentNode.left.RecalculateHeight();
-                            BalanceTree();
+                            BalanceTree(currentNode);
                             Count++;
 
                             return true;
@@ -113,7 +113,7 @@ namespace AVLTree
                             newItem.parent = currentNode;
                             currentNode.right = newItem;
                             currentNode.right.RecalculateHeight();
-                            BalanceTree();
+                            BalanceTree(currentNode);
                             Count++;
 
                             return true;
@@ -157,10 +157,58 @@ namespace AVLTree
         /// <summary>
         /// Выполняет балансировку дереву.
         /// </summary>
-        public void BalanceTree()
+        public void BalanceTree(Node<TKey, TValue> node)
         {
             //Балансировка необходима <=> когда высота левого и правого поддеревьев = 2
+            //идея алгоритма балансировки: 
+            //от узла вставки делаем переход к его родителям пока не вернемся в корень
+            //на каждом узле в процессе обхода считаем баланс. 
+            // Если баланс = 2 -> левое поддерево длинее правого -> RotateRight
+            // Если баланс = -2 -> RotateLeft
 
+            while (node != null)
+            {
+                int balance = GetBalance(node);
+
+                if (balance == 2)
+                {
+                    int leftbalance = GetBalance(node.left);
+
+                    if (leftbalance == 1)
+                    {
+                        RotateRight(node);
+                        node.RecalculateHeight();
+                    }
+                    else
+                    {
+                        RotateLeft(node.left);
+                        node.left.RecalculateHeight();
+                        RotateRight(node);
+                        node.RecalculateHeight();
+                    }
+                    
+                } else if (balance == -2)
+                {
+                    int rightbalance = GetBalance(node.right);
+
+                    if (rightbalance == -1)
+                    {
+                        RotateLeft(node);
+                        node.RecalculateHeight();
+                    } else
+                    {
+                        RotateRight(node.right);
+                        node.right.RecalculateHeight();
+                        RotateLeft(node);
+                        node.RecalculateHeight();
+                    }
+                    
+                }
+
+                node = node.parent;
+            }
+            
+            
         }
 
         /// <summary>
@@ -168,8 +216,40 @@ namespace AVLTree
         /// </summary>
         public Node<TKey, TValue> RotateLeft(Node<TKey, TValue> node)
         {
+            var right = node.right;
+            var rightLeft = right.left;
+            var parent = node.parent;
 
-            return null;
+            right.parent = parent;
+            right.left = node;
+            node.right = rightLeft;
+            node.parent = right;
+
+            if (rightLeft != null)
+            {
+                rightLeft.parent = node;
+            }
+
+            if (node == root)
+            {
+                root = right;
+            }
+            else if (parent.right == node)
+            {
+                parent.right = right;
+            }
+            else
+            {
+                parent.left = right;
+            }
+
+            right.left.height--;
+            //right.left.height--;
+
+            //right.RecalculateHeight();
+            //right.right.height++;
+
+            return right;
         }
 
         /// <summary>
@@ -177,8 +257,39 @@ namespace AVLTree
         /// </summary>
         public Node<TKey, TValue> RotateRight(Node<TKey, TValue> node)
         {
+            var left = node.left;
+            var leftRight = left.right;
+            var parent = node.parent;
 
-            return null;
+            left.parent = parent;
+            left.right = node;
+            node.left = leftRight;
+            node.parent = left;
+
+            if (leftRight != null)
+            {
+                leftRight.parent = node;
+            }
+
+            if (node == root)
+            {
+                root = left;
+            }
+            else if (parent.left == node)
+            {
+                parent.left = left;
+            }
+            else
+            {
+                parent.right = left;
+            }
+
+            left.right.height--;
+            //left.right.height--;
+
+            //left.RecalculateHeight();
+
+            return left;
         }
     }
 }
