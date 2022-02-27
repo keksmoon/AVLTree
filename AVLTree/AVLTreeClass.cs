@@ -25,33 +25,26 @@ namespace AVLTree
         public int Count { get; private set; } = 0;
 
         /// <summary>
-        /// Возвращает высоту дерева от корня.
-        /// </summary>
-        public int Height()
-        {
-            if (root == null)
-            {
-                //throw new AVLTreeIsEmptyException();
-                return 0;
-            }
-
-            return root.height;
-        }
-
-        /// <summary>
         /// Возвращает высоту выбранного поддерева. 
         /// </summary>
         public int Height(Node<TKey, TValue> node)
         {
             if (node == null)
             {
-                //throw new AVLTreeIsEmptyException();
                 return 0;
             }
 
             return node.height;
         }
 
+        /// <summary>
+        /// Метод, возвращающий высоту всего дерева от корня.
+        /// </summary>
+        public int Height() => Height(root);
+
+        /// <summary>
+        /// Высчитывает баланс узла как разность высот его левого и правого поддеревьев.
+        /// </summary>
         public int GetBalance(Node<TKey, TValue> node)
         {
             if (node == null)
@@ -185,14 +178,11 @@ namespace AVLTree
                     if (leftbalance == 1)
                     {
                         RotateRight(node);
-                        root.Heights(root);
                     }
                     else
                     {
                         RotateLeft(node.left);
-                        root.Heights(root);
                         RotateRight(node);
-                        root.Heights(root);
                     }
 
                 }
@@ -203,14 +193,11 @@ namespace AVLTree
                     if (rightbalance == -1)
                     {
                         RotateLeft(node);
-                        root.Heights(root);
                     }
                     else
                     {
                         RotateRight(node.right);
-                        root.Heights(root);
                         RotateLeft(node);
-                        root.Heights(root);
                     }
 
                 }
@@ -253,7 +240,7 @@ namespace AVLTree
                 parent.left = right;
             }
 
-            //Как сделать, чтобы высоты были нормально
+            //Как сделать, чтобы высоты были нормально!!!
 
             return right;
         }

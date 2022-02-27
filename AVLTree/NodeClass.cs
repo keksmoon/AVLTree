@@ -58,19 +58,6 @@ namespace AVLTree
             }
         }
 
-        public int Heights(Node<TKey, TValue> node)
-        {
-            if (node != null)
-            {
-                int max = Math.Max(Heights(node.left), Heights(node.right));
-                node.height = 1 + max;
-
-                return node.height;
-            } 
-
-            return 0;
-        }
-
         public override bool Equals(object obj)
         {
             Node<TKey, TValue> otherNode = obj as Node<TKey, TValue>;
