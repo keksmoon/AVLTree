@@ -177,14 +177,14 @@ namespace AVLTree
                     if (leftbalance == 1)
                     {
                         RotateRight(node);
-                        node.RecalculateHeight();
+                        node.UpdateHight();
                     }
                     else
                     {
                         RotateLeft(node.left);
-                        node.left.RecalculateHeight();
+                        node.left.UpdateHight();
                         RotateRight(node);
-                        node.RecalculateHeight();
+                        node.UpdateHight();
                     }
                     
                 } else if (balance == -2)
@@ -194,13 +194,13 @@ namespace AVLTree
                     if (rightbalance == -1)
                     {
                         RotateLeft(node);
-                        node.RecalculateHeight();
+                        node.UpdateHight();
                     } else
                     {
                         RotateRight(node.right);
-                        node.right.RecalculateHeight();
+                        node.right.UpdateHight();
                         RotateLeft(node);
-                        node.RecalculateHeight();
+                        node.UpdateHight();
                     }
                     
                 }
@@ -243,11 +243,7 @@ namespace AVLTree
                 parent.left = right;
             }
 
-            right.left.height--;
-            //right.left.height--;
-
-            //right.RecalculateHeight();
-            //right.right.height++;
+            //Как сделать, чтобы высоты были нормально
 
             return right;
         }

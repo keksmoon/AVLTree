@@ -16,14 +16,14 @@ namespace MyApp
             //    avl.Insert(sign * item, "a");
             //}
 
-            //avl.Insert(-5, "a");
-            //avl.Insert(-4, "a");
-            //avl.Insert(-8, "a");
-            //avl.Insert(-6, "a");
-            //avl.Insert(-9, "a");
-            //avl.Insert(-7, "a");
+            //avl.Insert(5, "a");
+            //avl.Insert(4, "a");
+            //avl.Insert(8, "a");
+            //avl.Insert(6, "a");
+            //avl.Insert(9, "a");
+            //avl.Insert(7, "a");
 
-            for (int i = 0; i < 9; i++)
+            for (int i = 0; i < 10; i++)
             {
                 avl.Insert(i, "i");
             }

@@ -59,6 +59,37 @@ namespace AVLTree
             }
         }
 
+        public void UpdateHight()
+        {
+            int leftNode, rightNode;
+            var node = this;
+
+            while (node != null)
+            {
+                if (node.left == null)
+                {
+                    leftNode = 1;
+                }
+                else
+                {
+                    leftNode = node.left.height + 1;
+                }
+
+                if (node.left == null)
+                {
+                    rightNode = 1;
+                }
+                else
+                {
+                    rightNode = node.left.height + 1;
+                }
+
+                node.height = leftNode > rightNode ? leftNode : rightNode;
+
+                node = node.parent;
+            }
+        }
+
         public override bool Equals(object obj)
         {
             Node<TKey, TValue> otherNode = obj as Node<TKey, TValue>;
