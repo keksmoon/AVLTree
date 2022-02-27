@@ -59,7 +59,7 @@ namespace xUnitAVLTree
             AVL<int, string> avl = new AVL<int, string>();
             avl.Insert(0, "A");
 
-            Assert.Equal(0, avl.root.key);
+            Assert.Equal(0, avl.Root.Key);
         }
 
         //При добавлении элемента меньше чем корень дерева, он должен быть установлен левее корня.
@@ -70,7 +70,7 @@ namespace xUnitAVLTree
             avl.Insert(0, "A");
             avl.Insert(-1, "A");
 
-            Assert.Equal(-1, avl.root.left.key);
+            Assert.Equal(-1, avl.Root.Left.Key);
         }
 
         //При добавлении элемента больше чем корень дерева, он должен быть установлен левее корня.
@@ -81,7 +81,7 @@ namespace xUnitAVLTree
             avl.Insert(0, "A");
             avl.Insert(1, "A");
 
-            Assert.Equal(1, avl.root.right.key);
+            Assert.Equal(1, avl.Root.Right.Key);
         }
 
         //При сцеплении двух узлов, один должен быть parent, другой left & right
@@ -93,8 +93,8 @@ namespace xUnitAVLTree
             avl.Insert(1, "A");
             avl.Insert(-1, "A");
 
-            Assert.Equal(avl.root, avl.root.left.parent);
-            Assert.Equal(avl.root, avl.root.right.parent);
+            Assert.Equal(avl.Root, avl.Root.Left.Parent);
+            Assert.Equal(avl.Root, avl.Root.Right.Parent);
         }
 
         //В пустом дереве выста дерева должна быть 0
@@ -150,7 +150,7 @@ namespace xUnitAVLTree
                 avl.Insert(i, String.Empty);
             }
 
-            Assert.Equal(0, avl.GetBalance(avl.root));
+            Assert.Equal(0, avl.GetBalance(avl.Root));
         }
 
         //Нагрузка самого правого поддерева 10 элементами и проверка, что там есть все ключи
@@ -162,7 +162,7 @@ namespace xUnitAVLTree
             {
                 avl.Insert(i, i);
             }
-            List<Node<int, int>> nodes = avl.inorderTraversal();
+            var nodes = new List<Node<int, int>>(avl.InorderTraversal());
             List<int> keyValues = new List<int>();
             for (int i = 0; i < 10; i++)
             {
@@ -171,7 +171,7 @@ namespace xUnitAVLTree
 
             for (int i = 0; i < 10; i++)
             {
-                Assert.Equal(keyValues[i], nodes[i].key);
+                Assert.Equal(keyValues[i], nodes[i].Key);
             }
         }
 
@@ -184,7 +184,7 @@ namespace xUnitAVLTree
             {
                 avl.Insert(i, i);
             }
-            List<Node<int, int>> nodes = avl.inorderTraversal();
+            var nodes = new List<Node<int, int>>(avl.InorderTraversal());
             List<int> keyValues = new List<int>();
             for (int i = 0; i < 10; i++)
             {
@@ -193,7 +193,7 @@ namespace xUnitAVLTree
 
             for (int i = 0; i < 10; i++)
             {
-                Assert.Equal(keyValues[i], nodes[i].value);
+                Assert.Equal(keyValues[i], nodes[i].Value);
             }
         }
 
@@ -206,7 +206,7 @@ namespace xUnitAVLTree
             {
                 avl.Insert(-i, -i);
             }
-            List<Node<int, int>> nodes = avl.inorderTraversal();
+            var nodes = new List<Node<int, int>>(avl.InorderTraversal());
             List<int> keyValues = new List<int>();
             for (int i = 0; i < 10; i++)
             {
@@ -215,7 +215,7 @@ namespace xUnitAVLTree
             keyValues.Sort();
             for (int i = 0; i < 10; i++)
             {
-                Assert.Equal(keyValues[i], nodes[i].key);
+                Assert.Equal(keyValues[i], nodes[i].Key);
             }
         }
 
@@ -228,7 +228,7 @@ namespace xUnitAVLTree
             {
                 avl.Insert(-i, -i);
             }
-            List<Node<int, int>> nodes = avl.inorderTraversal();
+            var nodes = new List<Node<int, int>>(avl.InorderTraversal());
             List<int> keyValues = new List<int>();
             for (int i = 0; i < 10; i++)
             {
@@ -237,7 +237,7 @@ namespace xUnitAVLTree
             keyValues.Sort();
             for (int i = 0; i < 10; i++)
             {
-                Assert.Equal(keyValues[i], nodes[i].value);
+                Assert.Equal(keyValues[i], nodes[i].Value);
             }
         }
 
@@ -252,12 +252,12 @@ namespace xUnitAVLTree
             avl.Insert(6, 6);
             avl.Insert(9, 9);
             avl.Insert(7, 7);
-            List<Node<int, int>> nodes = avl.inorderTraversal();
+            var nodes = new List<Node<int, int>>(avl.InorderTraversal());
             List<int> keyValues = new List<int>() { 5, 4, 8, 6, 9, 7 };
             keyValues.Sort();
             for (int i = 0; i < keyValues.Count; i++)
             {
-                Assert.Equal(keyValues[i], nodes[i].key);
+                Assert.Equal(keyValues[i], nodes[i].Key);
             }
 
         }
@@ -273,12 +273,12 @@ namespace xUnitAVLTree
             avl.Insert(6, 6);
             avl.Insert(9, 9);
             avl.Insert(7, 7);
-            List<Node<int, int>> nodes = avl.inorderTraversal();
+            var nodes = new List<Node<int, int>>(avl.InorderTraversal());
             List<int> keyValues = new List<int>() { 5, 4, 8, 6, 9, 7 };
             keyValues.Sort();
             for (int i = 0; i < keyValues.Count; i++)
             {
-                Assert.Equal(keyValues[i], nodes[i].value);
+                Assert.Equal(keyValues[i], nodes[i].Value);
             }
         }
 
@@ -293,12 +293,12 @@ namespace xUnitAVLTree
             avl.Insert(-6, -6);
             avl.Insert(-9, -9);
             avl.Insert(-7, -7);
-            List<Node<int, int>> nodes = avl.inorderTraversal();
+            var nodes = new List<Node<int, int>>(avl.InorderTraversal());
             List<int> keyValues = new List<int>() { -5, -4, -8, -6, -9, -7 };
             keyValues.Sort();
             for (int i = 0; i < keyValues.Count; i++)
             {
-                Assert.Equal(keyValues[i], nodes[i].key);
+                Assert.Equal(keyValues[i], nodes[i].Key);
             }
 
         }
@@ -313,12 +313,12 @@ namespace xUnitAVLTree
             avl.Insert(-6, -6);
             avl.Insert(-9, -9);
             avl.Insert(-7, -7);
-            List<Node<int, int>> nodes = avl.inorderTraversal();
+            var nodes = new List<Node<int, int>>(avl.InorderTraversal());
             List<int> keyValues = new List<int>() { -5, -4, -8, -6, -9, -7 };
             keyValues.Sort();
             for (int i = 0; i < keyValues.Count; i++)
             {
-                Assert.Equal(keyValues[i], nodes[i].value);
+                Assert.Equal(keyValues[i], nodes[i].Value);
             }
         }
 
@@ -411,6 +411,24 @@ namespace xUnitAVLTree
                 avl[1] = "b";
             }
             );
+        }
+
+        //После обхода пустого дерева, количество найденных элементов должно быть 0
+        [Fact]
+        public void Test29()
+        {
+            AVL<int, string> avl = new AVL<int, string>();
+
+            var InOrderTraversalResults = avl.InorderTraversal();
+
+            int CntItemsInOrderTraversalResults = 0;
+
+            foreach (var items in InOrderTraversalResults)
+            {
+                CntItemsInOrderTraversalResults++;
+            }
+
+            Assert.Equal(0, CntItemsInOrderTraversalResults);
         }
     }
 }

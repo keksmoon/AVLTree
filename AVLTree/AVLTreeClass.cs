@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AVLTree
 {
@@ -12,14 +8,9 @@ namespace AVLTree
     /// </summary>
     public class AVL<TKey, TValue> where TKey : IComparable<TKey>
     {
-        public Node<TKey, TValue> root { get; private set; }
+        public Node<TKey, TValue> Root { get; private set; }
 
-        //public List<Node<TKey, TValue>> children { get; private set; }
-        public AVL()
-        {
-            root = null;
-            //children = new List<Node<TKey, TValue>>();
-        }
+        public AVL() => Root = null;
 
         /// <summary>
         /// Количество элементов в АВЛ дереве.
@@ -36,13 +27,13 @@ namespace AVLTree
                 return 0;
             }
 
-            return node.height;
+            return node.Height;
         }
 
         /// <summary>
         /// Метод, возвращающий высоту всего дерева от корня.
         /// </summary>
-        public int Height() => Height(root);
+        public int Height() => Height(Root);
 
         /// <summary>
         /// Высчитывает баланс узла как разность высот его левого и правого поддеревьев.
@@ -54,7 +45,7 @@ namespace AVLTree
                 return 0;
             }
 
-            return Height(node.left) - Height(node.right);
+            return Height(node.Left) - Height(node.Right);
         }
 
         /// <summary>
@@ -64,16 +55,16 @@ namespace AVLTree
         {
             Node<TKey, TValue> newItem = new Node<TKey, TValue>(key, value);
 
-            if (root == null)
+            if (Root == null)
             {
                 //Если дерево пусто, заменяем его на дерево с одним узлом newItem.
-                root = newItem;
-                root.height = 1;
+                Root = newItem;
+                Root.Height = 1;
                 Count++;
             }
             else
             {
-                var currentNode = root;
+                var currentNode = Root;
 
                 //Иначе необходимо:
                 //  1. Найти место для вставки нового элемента.
@@ -83,43 +74,39 @@ namespace AVLTree
 
                 while (currentNode != null)
                 {
-                    var resultComparison = newItem.key.CompareTo(currentNode.key);
+                    var resultComparison = newItem.Key.CompareTo(currentNode.Key);
                     // -1 если элемент для вставки меньше рассматриваемого
                     // 1 если элемент для вставки больше рассматриваемого
 
                     if (resultComparison < 0)
                     {
-                        if (currentNode.left == null)
+                        if (currentNode.Left == null)
                         {
-                            newItem.parent = currentNode;
-                            currentNode.left = newItem;
-                            currentNode.left.RecalculateHeight();
+                            newItem.Parent = currentNode;
+                            currentNode.Left = newItem;
+                            currentNode.Left.RecalculateHeight();
                             BalanceTree(currentNode);
                             Count++;
-
-                            //TreeNodePrinter.Print(root);
 
                             return true;
                         }
 
-                        currentNode = currentNode.left;
+                        currentNode = currentNode.Left;
                     }
                     else if (resultComparison > 0)
                     {
-                        if (currentNode.right == null)
+                        if (currentNode.Right == null)
                         {
-                            newItem.parent = currentNode;
-                            currentNode.right = newItem;
-                            currentNode.right.RecalculateHeight();
+                            newItem.Parent = currentNode;
+                            currentNode.Right = newItem;
+                            currentNode.Right.RecalculateHeight();
                             BalanceTree(currentNode);
                             Count++;
-
-                            //TreeNodePrinter.Print(root);
 
                             return true;
                         }
 
-                        currentNode = currentNode.right;
+                        currentNode = currentNode.Right;
                     }
                     else
                     {
@@ -127,8 +114,6 @@ namespace AVLTree
                     }
                 }
             }
-
-            //TreeNodePrinter.Print(root);
 
             return true;
         }
@@ -156,30 +141,37 @@ namespace AVLTree
                 value = default(TValue);
                 return false;
             }
-            value = current.value;
+
+            value = current.Value;
             return true;
         }
 
+        /// <summary>
+        /// Выполняет поиск узла по ключу.
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns>Если узел найден, то возращает узел. В противном случае null.</returns>
         private Node<TKey, TValue> Find(TKey key)
         {
-            var current = root;
+            var current = Root;
             while (current != null)
             {
-                int result = current.key.CompareTo(key);
+                int result = current.Key.CompareTo(key);
 
                 if (result > 0)
                 {
-                    current = current.left;
+                    current = current.Left;
                 }
                 else if (result < 0)
                 {
-                    current = current.right;
+                    current = current.Right;
                 }
                 else
                 {
                     break;
                 }
             }
+
             return current;
         }
 
@@ -201,7 +193,7 @@ namespace AVLTree
 
                 if (balance == 2)
                 {
-                    int leftbalance = GetBalance(node.left);
+                    int leftbalance = GetBalance(node.Left);
 
                     if (leftbalance == 1)
                     {
@@ -209,14 +201,14 @@ namespace AVLTree
                     }
                     else
                     {
-                        RotateLeft(node.left);
+                        RotateLeft(node.Left);
                         RotateRight(node);
                     }
 
                 }
                 else if (balance == -2)
                 {
-                    int rightbalance = GetBalance(node.right);
+                    int rightbalance = GetBalance(node.Right);
 
                     if (rightbalance == -1)
                     {
@@ -224,53 +216,51 @@ namespace AVLTree
                     }
                     else
                     {
-                        RotateRight(node.right);
+                        RotateRight(node.Right);
                         RotateLeft(node);
                     }
                 }
 
-                node = node.parent;
+                node = node.Parent;
             }
-
-
         }
 
         /// <summary>
         /// Осуществляет поворот АВЛ-поддерева налево.
         /// </summary>
-        public Node<TKey, TValue> RotateLeft(Node<TKey, TValue> node)
+        internal Node<TKey, TValue> RotateLeft(Node<TKey, TValue> node)
         {
-            node.height -= 2; //узел будет понижаться -> упадет его высота
+            node.Height -= 2; //узел будет понижаться -> упадет его высота
 
-            var newRoot = node.right;
-            var newRootLeft = newRoot.left;
-            var parent = node.parent;
+            var newRoot = node.Right;
+            var newRootLeft = newRoot.Left;
+            var parent = node.Parent;
 
-            newRoot.parent = parent;
-            newRoot.left = node;
-            node.right = newRootLeft;
-            node.parent = newRoot;
+            newRoot.Parent = parent;
+            newRoot.Left = node;
+            node.Right = newRootLeft;
+            node.Parent = newRoot;
 
             if (newRootLeft != null)
             {
-                newRootLeft.parent = node;
+                newRootLeft.Parent = node;
             }
 
-            if (node == root)
+            if (node == Root)
             {
-                root = newRoot;
+                Root = newRoot;
             }
-            else if (parent.right == node)
+            else if (parent.Right == node)
             {
-                parent.right = newRoot;
-                if (newRoot.right.right != null)
-                    newRoot.right.right.RecalculateHeight();
+                parent.Right = newRoot;
+                if (newRoot.Right.Right != null)
+                    newRoot.Right.Right.RecalculateHeight();
             }
             else
             {
-                parent.left = newRoot;
-                if (newRoot.left.left != null)
-                    newRoot.left.left.RecalculateHeight();
+                parent.Left = newRoot;
+                if (newRoot.Left.Left != null)
+                    newRoot.Left.Left.RecalculateHeight();
             }
 
             //здесь newRoot "в цепочке". Надо пробежать по его родителям и пересчитать высоты
@@ -285,39 +275,39 @@ namespace AVLTree
         /// <summary>
         /// Осуществляет поворот АВЛ-поддерева направо.
         /// </summary>
-        public Node<TKey, TValue> RotateRight(Node<TKey, TValue> node)
+        internal Node<TKey, TValue> RotateRight(Node<TKey, TValue> node)
         {
-            node.height -= 2;
+            node.Height -= 2;
 
-            var newRoot = node.left;
-            var newRootRight = newRoot.right;
-            var parent = node.parent;
+            var newRoot = node.Left;
+            var newRootRight = newRoot.Right;
+            var parent = node.Parent;
 
-            newRoot.parent = parent;
-            newRoot.right = node;
-            node.left = newRootRight;
-            node.parent = newRoot;
+            newRoot.Parent = parent;
+            newRoot.Right = node;
+            node.Left = newRootRight;
+            node.Parent = newRoot;
 
             if (newRootRight != null)
             {
-                newRootRight.parent = node;
+                newRootRight.Parent = node;
             }
 
-            if (node == root)
+            if (node == Root)
             {
-                root = newRoot;
+                Root = newRoot;
             }
-            else if (parent.left == node)
+            else if (parent.Left == node)
             {
-                parent.left = newRoot;
-                if (newRoot.left.left != null)
-                    newRoot.left.left.RecalculateHeight();
+                parent.Left = newRoot;
+                if (newRoot.Left.Left != null)
+                    newRoot.Left.Left.RecalculateHeight();
             }
             else
             {
-                parent.right = newRoot;
-                if (newRoot.right.right != null)
-                    newRoot.right.right.RecalculateHeight();
+                parent.Right = newRoot;
+                if (newRoot.Right.Right != null)
+                    newRoot.Right.Right.RecalculateHeight();
             }
 
             newRoot.RecalculateHeight();
@@ -326,38 +316,52 @@ namespace AVLTree
         }
 
         /// <summary>
+        /// Выполняет прямой обход дерева.
+        /// </summary>
+        /// <returns>Возвращает список узлов.</returns>
+        public IEnumerable<Node<TKey, TValue>> InorderTraversal()
+        {
+            var nodes = new List<Node<TKey, TValue>>();
+
+            InorderTraversal(Root, nodes);
+
+            return nodes;
+        }
+
+        /// <summary>
         /// Обход дерева
         /// </summary>
         /// <param name="node">Вершина</param>
         /// <param name="children">Коллекция обхода</param>
-        internal void inorderTraversal(Node<TKey, TValue> node, List<Node<TKey, TValue>> children)
+        internal void InorderTraversal(Node<TKey, TValue> node, List<Node<TKey, TValue>> children)
         {
             if (node != null)
             {
-                inorderTraversal(node.left, children);
+                InorderTraversal(node.Left, children);
                 children.Add(node);
-                inorderTraversal(node.right, children);
+                InorderTraversal(node.Right, children);
             }
         }
-        public List<Node<TKey, TValue>> inorderTraversal()
-        {
-            List<Node<TKey, TValue>> children = new List<Node<TKey, TValue>>();
-            inorderTraversal(root, children);
-            return children;
-        }
 
+        /// <summary>
+        /// Реализует поиск значения по индексу (ключу) и может изменять значения найденного ключа.
+        /// </summary>
+        /// <param name="key">Ключ для поиска</param>
         public TValue this[TKey key]
         {
             get
             {
                 TValue value;
                 bool keyIsFound = TryGetValue(key, out value);
+
                 if (!keyIsFound)
                 {
                     throw new KeyNotFoundException();
                 }
+
                 return value;
             }
+
             set
             {
                 var node = Find(key);
@@ -365,7 +369,8 @@ namespace AVLTree
                 {
                     throw new KeyNotFoundException();
                 }
-                node.value = value;
+
+                node.Value = value;
             }
         }
     }

@@ -9,51 +9,51 @@ namespace AVLTree
     /// <typeparam name="TValue">Значение вершины.</typeparam>
     public class Node<TKey, TValue>
     {
-        public TKey key { get; internal set; } 
-        public TValue value { get; internal set; }
+        public TKey Key { get; internal set; } 
+        public TValue Value { get; internal set; }
 
-        public Node<TKey, TValue> parent { get; internal set; }
-        public Node<TKey, TValue> left { get; internal set; }
-        public Node<TKey, TValue> right { get; internal set; }
+        public Node<TKey, TValue> Parent { get; internal set; }
+        public Node<TKey, TValue> Left { get; internal set; }
+        public Node<TKey, TValue> Right { get; internal set; }
 
-        public int height { get; internal set; } = 1;
+        public int Height { get; internal set; } = 1;
 
         public Node(TKey key, TValue value)
         {
-            this.value = value;
-            this.key = key;
-            parent = null;
+            this.Value = value;
+            this.Key = key;
+            Parent = null;
         }
 
         public Node(TKey key, TValue value, Node<TKey, TValue> parent)
         {
-            this.value = value;
-            this.key = key;
-            this.parent = parent;
-            this.height = 0;
+            this.Value = value;
+            this.Key = key;
+            this.Parent = parent;
+            this.Height = 0;
         }
 
         /// <summary>
         /// Метод пересчета высоты на которой расположен этот узел в дереве.
         /// </summary>
-        public void RecalculateHeight()
+        internal void RecalculateHeight()
         {
             var currentNode = this;
 
-            while (currentNode.parent != null)
+            while (currentNode.Parent != null)
             {
-                currentNode = currentNode.parent;
+                currentNode = currentNode.Parent;
                 
-                if (currentNode.left == null)
+                if (currentNode.Left == null)
                 {
-                    currentNode.height = currentNode.right.height + 1;
-                } else if (currentNode.right == null)
+                    currentNode.Height = currentNode.Right.Height + 1;
+                } else if (currentNode.Right == null)
                 {
-                    currentNode.height = currentNode.left.height + 1;
+                    currentNode.Height = currentNode.Left.Height + 1;
                 } else 
                 {
-                    int maxHeight = Math.Max(currentNode.right.height, currentNode.left.height) + 1;
-                    currentNode.height = maxHeight;
+                    int maxHeight = Math.Max(currentNode.Right.Height, currentNode.Left.Height) + 1;
+                    currentNode.Height = maxHeight;
                 }
             }
         }
@@ -68,7 +68,7 @@ namespace AVLTree
             }
             else
             {
-                if (this.key.Equals(otherNode.key) && this.value.Equals(otherNode.value))
+                if (this.Key.Equals(otherNode.Key) && this.Value.Equals(otherNode.Value))
                 {
                     return true;
                 }
@@ -81,7 +81,7 @@ namespace AVLTree
 
         public override string ToString()
         {
-            return string.Format("{0} {1}", key, value);
+            return string.Format("{0} {1}", Key, Value);
         }
     }
 }

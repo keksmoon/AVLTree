@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AVLTree
 {
@@ -25,7 +22,7 @@ namespace AVLTree
             var next = root;
             for (int level = 0; next != null; level++)
             {
-                var item = new NodeInfo<TKey, TValue> { Node = next, Text = string.Format("({0}:h{1})", next.key.ToString(), next.height.ToString()) };
+                var item = new NodeInfo<TKey, TValue> { Node = next, Text = string.Format("({0}:h{1})", next.Key.ToString(), next.Height.ToString()) };
                 if (level < last.Count)
                 {
                     item.StartPos = last[level].EndPos + 1;
@@ -39,7 +36,7 @@ namespace AVLTree
                 if (level > 0)
                 {
                     item.Parent = last[level - 1];
-                    if (next == item.Parent.Node.left)
+                    if (next == item.Parent.Node.Left)
                     {
                         item.Parent.Left = item;
                         item.EndPos = Math.Max(item.EndPos, item.Parent.StartPos);
@@ -50,7 +47,7 @@ namespace AVLTree
                         item.StartPos = Math.Max(item.StartPos, item.Parent.EndPos);
                     }
                 }
-                next = next.left ?? next.right;
+                next = next.Left ?? next.Right;
                 for (; next == null; item = item.Parent)
                 {
                     Print(item, rootTop + 2 * level);
@@ -58,7 +55,7 @@ namespace AVLTree
                     if (item == item.Parent.Left)
                     {
                         item.Parent.StartPos = item.EndPos;
-                        next = item.Parent.Node.right;
+                        next = item.Parent.Node.Right;
                     }
                     else
                     {

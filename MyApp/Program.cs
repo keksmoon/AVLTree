@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using AVLTree;
 
 namespace MyApp
@@ -11,9 +9,6 @@ namespace MyApp
         {
             AVL<int, string> avl = new AVL<int, string>();
 
-            //for (int i = 0; i < 1000; i++)
-            //    avl.Insert(i, String.Empty);
-
             //for (int i = 1; i <= 54 / 2; i++)
             //{
             //    int sign = (int)Math.Pow(-1, i);
@@ -21,49 +16,7 @@ namespace MyApp
             //    avl.Insert(sign * item, "a");
             //}
 
-            //avl.Insert(-5, "a");
-            //avl.Insert(-4, "a");
-            //avl.Insert(-8, "a");
-            //avl.Insert(-6, "a");
-            //avl.Insert(-9, "a");
-            //avl.Insert(-7, "a");
-
-            //for (int i = 10; i < 20; i++)
-            //{
-            //    avl.Insert(i, "i");
-            //}
-
-            avl.Insert(0, "a");
-            string a;
-            Console.WriteLine(avl.TryGetValue(1, out a));
-            Console.WriteLine(a);
-            
-            SortedDictionary<int, string> sdc = new SortedDictionary<int, string>();
-            //Console.WriteLine(sdc);
-            Console.WriteLine(a);
-
-            //Stopwatch stopWatch = new Stopwatch();
-            //stopWatch.Start();
-
-            //for (int i = 0; i < 1000000; i++)
-            //{
-            //    avl.Insert(i, "i");
-            //}
-
-            //stopWatch.Stop();
-            //Console.WriteLine("AVL: " + stopWatch.ElapsedMilliseconds);
-
-            //stopWatch.Restart();
-
-            //for (int i = 0; i < 1000000; i++)
-            //{
-            //    sdc.Add(i, "i");
-            //}
-
-            //stopWatch.Stop();
-
-            //Console.WriteLine("SDC: " + stopWatch.ElapsedMilliseconds);
-            TreeNodePrinter.Print(avl.root);
+            TreeNodePrinter.Print(avl.Root);
 
             Console.ReadKey();
         }
