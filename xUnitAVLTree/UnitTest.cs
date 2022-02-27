@@ -124,7 +124,7 @@ namespace xUnitAVLTree
 
         //После добавления трех упорядоченных элементов в пустое дерево, высота должна быть 2
         [Fact]
-        public void Test11() 
+        public void Test11()
         {
             //   2
             //  / \
@@ -152,7 +152,7 @@ namespace xUnitAVLTree
 
             Assert.Equal(0, avl.GetBalance(avl.root));
         }
-        
+
         //Нагрузка самого правого поддерева 10 элементами и проверка, что там есть все ключи
         [Fact]
         public void Test13()
@@ -162,7 +162,7 @@ namespace xUnitAVLTree
             {
                 avl.Insert(i, i);
             }
-            List<Node<int,int>> nodes = avl.inorderTraversal();
+            List<Node<int, int>> nodes = avl.inorderTraversal();
             List<int> keyValues = new List<int>();
             for (int i = 0; i < 10; i++)
             {
@@ -322,6 +322,95 @@ namespace xUnitAVLTree
             }
         }
 
+        //Проверка метода TryGetValue - true, если ключ находится
+        [Fact]
+        public void Test21()
+        {
+            AVL<int, string> avl = new AVL<int, string>();
+            avl.Insert(0, "a");
+            string a;
+            Assert.True(avl.TryGetValue(0, out a));
+        }
 
+        //Проверка метода TryGetValue - значение элемента возвращено, если ключ находится
+        [Fact]
+        public void Test22()
+        {
+            AVL<int, string> avl = new AVL<int, string>();
+            string expected = "a";
+            avl.Insert(0, "a");
+            string a;
+            bool f = avl.TryGetValue(0, out a);
+            Assert.Equal(a, expected);
+        }
+
+        //Проверка метода TryGetValue - false, если ключ не находится
+        [Fact]
+        public void Test23()
+        {
+            AVL<int, string> avl = new AVL<int, string>();
+            avl.Insert(0, "a");
+            string a;
+            Assert.False(avl.TryGetValue(1, out a));
+        }
+
+        //Проверка метода TryGetValue - значение элемента не возвращено, если ключ не находится
+        [Fact]
+        public void Test24()
+        {
+            AVL<int, string> avl = new AVL<int, string>();
+            string expected = null;
+            avl.Insert(0, "a");
+            string a;
+            bool f = avl.TryGetValue(1, out a);
+            Assert.Equal(a, expected);
+        }
+
+        //Проверка индексатора на get по ключу, где задано значение
+        [Fact]
+        public void Test25()
+        {
+            AVL<int, string> avl = new AVL<int, string>();
+            string expected = "a";
+            avl.Insert(0, "a");
+            Assert.Equal(expected, avl[0]);
+        }
+
+        //Проверка индексатора на get по ключу, где не задано значение
+        [Fact]
+        public void Test26()
+        {
+            AVL<int, string> avl = new AVL<int, string>();
+            avl.Insert(0, "A");
+            Assert.Throws<KeyNotFoundException>(() =>
+            {
+                var a = avl[1];
+            }
+            );
+        }
+
+        //Проверка индексатора на set по ключу, где значение задано
+        [Fact]
+        public void Test27()
+        {
+            AVL<int, string> avl = new AVL<int, string>();
+            string expected = "b";
+            avl.Insert(0, "a");
+            avl[0] = "b";
+            Assert.Equal(expected, avl[0]);
+        }
+
+        //Проверка индексатора на set по ключу, где значение не задано
+        [Fact]
+        public void Test28()
+        {
+            AVL<int, string> avl = new AVL<int, string>();
+            avl.Insert(0, "A");
+            Assert.Throws<KeyNotFoundException>(() =>
+            {
+                avl[1] = "b";
+            }
+            );
+        }
     }
 }

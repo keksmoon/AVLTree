@@ -103,7 +103,8 @@ namespace AVLTree
                         }
 
                         currentNode = currentNode.left;
-                    } else if (resultComparison > 0)
+                    }
+                    else if (resultComparison > 0)
                     {
                         if (currentNode.right == null)
                         {
@@ -119,7 +120,8 @@ namespace AVLTree
                         }
 
                         currentNode = currentNode.right;
-                    } else
+                    }
+                    else
                     {
                         throw new DuplicationItemsInTreeException();
                     }
@@ -148,11 +150,37 @@ namespace AVLTree
         /// <returns>True, если элемент найден и False в ином случае.</returns>
         public bool TryGetValue(TKey key, out TValue value)
         {
-            object result = null;
+            Node<TKey, TValue> current = Find(key);
+            if (current == null)
+            {
+                value = default(TValue);
+                return false;
+            }
+            value = current.value;
+            return true;
+        }
 
-            value = (TValue)result;
+        private Node<TKey, TValue> Find(TKey key)
+        {
+            var current = root;
+            while (current != null)
+            {
+                int result = current.key.CompareTo(key);
 
-            return false;
+                if (result > 0)
+                {
+                    current = current.left;
+                }
+                else if (result < 0)
+                {
+                    current = current.right;
+                }
+                else
+                {
+                    break;
+                }
+            }
+            return current;
         }
 
         /// <summary>
@@ -296,6 +324,12 @@ namespace AVLTree
 
             return newRoot;
         }
+
+        /// <summary>
+        /// Обход дерева
+        /// </summary>
+        /// <param name="node">Вершина</param>
+        /// <param name="children">Коллекция обхода</param>
         internal void inorderTraversal(Node<TKey, TValue> node, List<Node<TKey, TValue>> children)
         {
             if (node != null)
@@ -307,9 +341,32 @@ namespace AVLTree
         }
         public List<Node<TKey, TValue>> inorderTraversal()
         {
-            List<Node<TKey,TValue>> children = new List<Node<TKey, TValue>>();
+            List<Node<TKey, TValue>> children = new List<Node<TKey, TValue>>();
             inorderTraversal(root, children);
             return children;
+        }
+
+        public TValue this[TKey key]
+        {
+            get
+            {
+                TValue value;
+                bool keyIsFound = TryGetValue(key, out value);
+                if (!keyIsFound)
+                {
+                    throw new KeyNotFoundException();
+                }
+                return value;
+            }
+            set
+            {
+                var node = Find(key);
+                if (node==null)
+                {
+                    throw new KeyNotFoundException();
+                }
+                node.value = value;
+            }
         }
     }
 }

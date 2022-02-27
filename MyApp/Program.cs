@@ -13,7 +13,6 @@ namespace MyApp
 
             //for (int i = 0; i < 1000; i++)
             //    avl.Insert(i, String.Empty);
-            avl = new AVL<int, string>();
 
             //for (int i = 1; i <= 54 / 2; i++)
             //{
@@ -34,7 +33,14 @@ namespace MyApp
             //    avl.Insert(i, "i");
             //}
 
-            //SortedDictionary<int, string> sdc = new SortedDictionary<int, string>();
+            avl.Insert(0, "a");
+            string a;
+            Console.WriteLine(avl.TryGetValue(1, out a));
+            Console.WriteLine(a);
+            
+            SortedDictionary<int, string> sdc = new SortedDictionary<int, string>();
+            //Console.WriteLine(sdc);
+            Console.WriteLine(a);
 
             //Stopwatch stopWatch = new Stopwatch();
             //stopWatch.Start();
