@@ -95,8 +95,7 @@ namespace AVLTree
                             BalanceTree(currentNode);
                             Count++;
 
-                            //root.Heights(root);
-                            // TreeNodePrinter.Print(root);
+                            //TreeNodePrinter.Print(root);
 
                             return true;
                         }
@@ -112,7 +111,6 @@ namespace AVLTree
                             BalanceTree(currentNode);
                             Count++;
 
-                            //root.Heights(root);
                             //TreeNodePrinter.Print(root);
 
                             return true;
@@ -199,7 +197,6 @@ namespace AVLTree
                         RotateRight(node.right);
                         RotateLeft(node);
                     }
-
                 }
 
                 node = node.parent;
@@ -213,36 +210,46 @@ namespace AVLTree
         /// </summary>
         public Node<TKey, TValue> RotateLeft(Node<TKey, TValue> node)
         {
-            var right = node.right;
-            var rightLeft = right.left;
+            node.height -= 2; //узел будет понижаться -> упадет его высота
+
+            var newRoot = node.right;
+            var newRootLeft = newRoot.left;
             var parent = node.parent;
 
-            right.parent = parent;
-            right.left = node;
-            node.right = rightLeft;
-            node.parent = right;
+            newRoot.parent = parent;
+            newRoot.left = node;
+            node.right = newRootLeft;
+            node.parent = newRoot;
 
-            if (rightLeft != null)
+            if (newRootLeft != null)
             {
-                rightLeft.parent = node;
+                newRootLeft.parent = node;
             }
 
             if (node == root)
             {
-                root = right;
+                root = newRoot;
             }
             else if (parent.right == node)
             {
-                parent.right = right;
+                parent.right = newRoot;
+                if (newRoot.right.right != null)
+                    newRoot.right.right.RecalculateHeight();
             }
             else
             {
-                parent.left = right;
+                parent.left = newRoot;
+                if (newRoot.left.left != null)
+                    newRoot.left.left.RecalculateHeight();
             }
+
+            //здесь newRoot "в цепочке". Надо пробежать по его родителям и пересчитать высоты
+            //за основу брать высоту newRoot и его брата если есть
+            newRoot.RecalculateHeight();
 
             //Как сделать, чтобы высоты были нормально!!!
 
-            return right;
+            return newRoot;
         }
 
         /// <summary>
@@ -250,34 +257,42 @@ namespace AVLTree
         /// </summary>
         public Node<TKey, TValue> RotateRight(Node<TKey, TValue> node)
         {
-            var left = node.left;
-            var leftRight = left.right;
+            node.height -= 2;
+
+            var newRoot = node.left;
+            var newRootRight = newRoot.right;
             var parent = node.parent;
 
-            left.parent = parent;
-            left.right = node;
-            node.left = leftRight;
-            node.parent = left;
+            newRoot.parent = parent;
+            newRoot.right = node;
+            node.left = newRootRight;
+            node.parent = newRoot;
 
-            if (leftRight != null)
+            if (newRootRight != null)
             {
-                leftRight.parent = node;
+                newRootRight.parent = node;
             }
 
             if (node == root)
             {
-                root = left;
+                root = newRoot;
             }
             else if (parent.left == node)
             {
-                parent.left = left;
+                parent.left = newRoot;
+                if (newRoot.left.left != null)
+                    newRoot.left.left.RecalculateHeight();
             }
             else
             {
-                parent.right = left;
+                parent.right = newRoot;
+                if (newRoot.right.right != null)
+                    newRoot.right.right.RecalculateHeight();
             }
 
-            return left;
+            newRoot.RecalculateHeight();
+
+            return newRoot;
         }
     }
 }

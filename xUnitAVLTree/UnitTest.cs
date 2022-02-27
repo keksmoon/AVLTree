@@ -151,5 +151,23 @@ namespace xUnitAVLTree
 
             Assert.Equal(0, avl.GetBalance(avl.root));
         }
+
+        [Fact]
+        public void Test13()
+        {
+
+        }
+
+        [Fact]
+        public void Test14()
+        {
+
+        }
+
+        [Fact]
+        public void Test15()
+        {
+
+        }
     }
 }
