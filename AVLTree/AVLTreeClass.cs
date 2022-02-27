@@ -14,9 +14,11 @@ namespace AVLTree
     {
         public Node<TKey, TValue> root { get; private set; }
 
+        //public List<Node<TKey, TValue>> children { get; private set; }
         public AVL()
         {
             root = null;
+            //children = new List<Node<TKey, TValue>>();
         }
 
         /// <summary>
@@ -114,8 +116,8 @@ namespace AVLTree
                             //TreeNodePrinter.Print(root);
 
                             return true;
-                        } 
-                        
+                        }
+
                         currentNode = currentNode.right;
                     } else
                     {
@@ -201,8 +203,8 @@ namespace AVLTree
 
                 node = node.parent;
             }
-            
-            
+
+
         }
 
         /// <summary>
@@ -293,6 +295,21 @@ namespace AVLTree
             newRoot.RecalculateHeight();
 
             return newRoot;
+        }
+        internal void inorderTraversal(Node<TKey, TValue> node, List<Node<TKey, TValue>> children)
+        {
+            if (node != null)
+            {
+                inorderTraversal(node.left, children);
+                children.Add(node);
+                inorderTraversal(node.right, children);
+            }
+        }
+        public List<Node<TKey, TValue>> inorderTraversal()
+        {
+            List<Node<TKey,TValue>> children = new List<Node<TKey, TValue>>();
+            inorderTraversal(root, children);
+            return children;
         }
     }
 }

@@ -1,6 +1,7 @@
 using System;
 using Xunit;
 using AVLTree;
+using System.Collections.Generic;
 
 namespace xUnitAVLTree
 {
@@ -155,19 +156,164 @@ namespace xUnitAVLTree
         [Fact]
         public void Test13()
         {
+            AVL<int, int> avl = new AVL<int, int>();
+            for (int i = 0; i < 10; i++)
+            {
+                avl.Insert(i, i);
+            }
+            List<Node<int,int>> nodes = avl.inorderTraversal();
+            List<int> keyValues = new List<int>();
+            for (int i = 0; i < 10; i++)
+            {
+                keyValues.Add(i);
+            }
 
+            for (int i = 0; i < 10; i++)
+            {
+                Assert.Equal(keyValues[i], nodes[i].key);
+            }
         }
 
         [Fact]
         public void Test14()
         {
+            AVL<int, int> avl = new AVL<int, int>();
+            for (int i = 0; i < 10; i++)
+            {
+                avl.Insert(i, i);
+            }
+            List<Node<int, int>> nodes = avl.inorderTraversal();
+            List<int> keyValues = new List<int>();
+            for (int i = 0; i < 10; i++)
+            {
+                keyValues.Add(i);
+            }
 
+            for (int i = 0; i < 10; i++)
+            {
+                Assert.Equal(keyValues[i], nodes[i].value);
+            }
         }
+
 
         [Fact]
         public void Test15()
         {
+            AVL<int, int> avl = new AVL<int, int>();
+            for (int i = 0; i < 10; i++)
+            {
+                avl.Insert(-i, -i);
+            }
+            List<Node<int, int>> nodes = avl.inorderTraversal();
+            List<int> keyValues = new List<int>();
+            for (int i = 0; i < 10; i++)
+            {
+                keyValues.Add(-i);
+            }
+            keyValues.Sort();
+            for (int i = 0; i < 10; i++)
+            {
+                Assert.Equal(keyValues[i], nodes[i].key);
+            }
+        }
+
+        [Fact]
+        public void Test16()
+        {
+            AVL<int, int> avl = new AVL<int, int>();
+            for (int i = 0; i < 10; i++)
+            {
+                avl.Insert(-i, -i);
+            }
+            List<Node<int, int>> nodes = avl.inorderTraversal();
+            List<int> keyValues = new List<int>();
+            for (int i = 0; i < 10; i++)
+            {
+                keyValues.Add(-i);
+            }
+            keyValues.Sort();
+            for (int i = 0; i < 10; i++)
+            {
+                Assert.Equal(keyValues[i], nodes[i].value);
+            }
+        }
+
+        [Fact]
+        public void Test17()
+        {
+            AVL<int, int> avl = new AVL<int, int>();
+            avl.Insert(5, 5);
+            avl.Insert(4, 4);
+            avl.Insert(8, 8);
+            avl.Insert(6, 6);
+            avl.Insert(9, 9);
+            avl.Insert(7, 7);
+            List<Node<int, int>> nodes = avl.inorderTraversal();
+            List<int> keyValues = new List<int>() { 5, 4, 8, 6, 9, 7 };
+            keyValues.Sort();
+            for (int i = 0; i < keyValues.Count; i++)
+            {
+                Assert.Equal(keyValues[i], nodes[i].key);
+            }
 
         }
+        [Fact]
+        public void Test18()
+        {
+            AVL<int, int> avl = new AVL<int, int>();
+            avl.Insert(5, 5);
+            avl.Insert(4, 4);
+            avl.Insert(8, 8);
+            avl.Insert(6, 6);
+            avl.Insert(9, 9);
+            avl.Insert(7, 7);
+            List<Node<int, int>> nodes = avl.inorderTraversal();
+            List<int> keyValues = new List<int>() { 5, 4, 8, 6, 9, 7 };
+            keyValues.Sort();
+            for (int i = 0; i < keyValues.Count; i++)
+            {
+                Assert.Equal(keyValues[i], nodes[i].value);
+            }
+        }
+
+        [Fact]
+        public void Test19()
+        {
+            AVL<int, int> avl = new AVL<int, int>();
+            avl.Insert(-5, -5);
+            avl.Insert(-4, -4);
+            avl.Insert(-8, -8);
+            avl.Insert(-6, -6);
+            avl.Insert(-9, -9);
+            avl.Insert(-7, -7);
+            List<Node<int, int>> nodes = avl.inorderTraversal();
+            List<int> keyValues = new List<int>() { -5, -4, -8, -6, -9, -7 };
+            keyValues.Sort();
+            for (int i = 0; i < keyValues.Count; i++)
+            {
+                Assert.Equal(keyValues[i], nodes[i].key);
+            }
+
+        }
+        [Fact]
+        public void Test20()
+        {
+            AVL<int, int> avl = new AVL<int, int>();
+            avl.Insert(-5, -5);
+            avl.Insert(-4, -4);
+            avl.Insert(-8, -8);
+            avl.Insert(-6, -6);
+            avl.Insert(-9, -9);
+            avl.Insert(-7, -7);
+            List<Node<int, int>> nodes = avl.inorderTraversal();
+            List<int> keyValues = new List<int>() { -5, -4, -8, -6, -9, -7 };
+            keyValues.Sort();
+            for (int i = 0; i < keyValues.Count; i++)
+            {
+                Assert.Equal(keyValues[i], nodes[i].value);
+            }
+        }
+
+
     }
 }

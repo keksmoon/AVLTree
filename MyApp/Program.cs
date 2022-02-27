@@ -34,13 +34,6 @@ namespace MyApp
             //    avl.Insert(i, "i");
             //}
 
-            //avl.Insert(5, "a");
-            //avl.Insert(4, "a");
-            //avl.Insert(8, "a");
-            //avl.Insert(6, "a");
-            //avl.Insert(9, "a");
-            //avl.Insert(7, "a");
-
             //SortedDictionary<int, string> sdc = new SortedDictionary<int, string>();
 
             //Stopwatch stopWatch = new Stopwatch();
