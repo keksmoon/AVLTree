@@ -102,6 +102,9 @@ namespace AVLTree
                             BalanceTree(currentNode);
                             Count++;
 
+                            //root.Heights(root);
+                            // TreeNodePrinter.Print(root);
+
                             return true;
                         }
 
@@ -116,6 +119,9 @@ namespace AVLTree
                             BalanceTree(currentNode);
                             Count++;
 
+                            //root.Heights(root);
+                            //TreeNodePrinter.Print(root);
+
                             return true;
                         } 
                         
@@ -126,6 +132,8 @@ namespace AVLTree
                     }
                 }
             }
+
+            //TreeNodePrinter.Print(root);
 
             return true;
         }
@@ -177,32 +185,34 @@ namespace AVLTree
                     if (leftbalance == 1)
                     {
                         RotateRight(node);
-                        node.UpdateHight();
+                        root.Heights(root);
                     }
                     else
                     {
                         RotateLeft(node.left);
-                        node.left.UpdateHight();
+                        root.Heights(root);
                         RotateRight(node);
-                        node.UpdateHight();
+                        root.Heights(root);
                     }
-                    
-                } else if (balance == -2)
+
+                }
+                else if (balance == -2)
                 {
                     int rightbalance = GetBalance(node.right);
 
                     if (rightbalance == -1)
                     {
                         RotateLeft(node);
-                        node.UpdateHight();
-                    } else
+                        root.Heights(root);
+                    }
+                    else
                     {
                         RotateRight(node.right);
-                        node.right.UpdateHight();
+                        root.Heights(root);
                         RotateLeft(node);
-                        node.UpdateHight();
+                        root.Heights(root);
                     }
-                    
+
                 }
 
                 node = node.parent;
@@ -279,11 +289,6 @@ namespace AVLTree
             {
                 parent.right = left;
             }
-
-            left.right.height--;
-            //left.right.height--;
-
-            //left.RecalculateHeight();
 
             return left;
         }

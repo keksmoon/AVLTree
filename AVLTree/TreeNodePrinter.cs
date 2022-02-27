@@ -25,7 +25,7 @@ namespace AVLTree
             var next = root;
             for (int level = 0; next != null; level++)
             {
-                var item = new NodeInfo<TKey, TValue> { Node = next, Text = string.Format("({0}:{1})", next.key.ToString(), next.value.ToString()) };
+                var item = new NodeInfo<TKey, TValue> { Node = next, Text = string.Format("({0}:h{1})", next.key.ToString(), next.height.ToString()) };
                 if (level < last.Count)
                 {
                     item.StartPos = last[level].EndPos + 1;

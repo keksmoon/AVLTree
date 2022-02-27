@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Text;
 
 namespace AVLTree
 {
@@ -59,35 +58,17 @@ namespace AVLTree
             }
         }
 
-        public void UpdateHight()
+        public int Heights(Node<TKey, TValue> node)
         {
-            int leftNode, rightNode;
-            var node = this;
-
-            while (node != null)
+            if (node != null)
             {
-                if (node.left == null)
-                {
-                    leftNode = 1;
-                }
-                else
-                {
-                    leftNode = node.left.height + 1;
-                }
+                int max = Math.Max(Heights(node.left), Heights(node.right));
+                node.height = 1 + max;
 
-                if (node.left == null)
-                {
-                    rightNode = 1;
-                }
-                else
-                {
-                    rightNode = node.left.height + 1;
-                }
+                return node.height;
+            } 
 
-                node.height = leftNode > rightNode ? leftNode : rightNode;
-
-                node = node.parent;
-            }
+            return 0;
         }
 
         public override bool Equals(object obj)

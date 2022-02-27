@@ -141,7 +141,33 @@ namespace xUnitAVLTree
         [Fact]
         public void Test12()
         {
+            AVL<int, string> avl = new AVL<int, string>();
+            Random rnd = new Random(DateTime.Now.Millisecond);
 
+            for (int i = 0; i < 10000; i++)
+            {
+                int sign = rnd.Next(-10, 10) > 0 ? 1 : -1;
+                
+                avl.Insert(sign * i, "a");
+            }
+
+            Assert.True((double)avl.Height() <= Math.Ceiling(Math.Log(10000, 2)));
+        }
+
+        [Fact]
+        public void Test13()
+        {
+            AVL<int, string> avl = new AVL<int, string>();
+            Random rnd = new Random(DateTime.Now.Millisecond);
+
+            for (int i = 0; i < 10000; i++)
+            {
+                int sign = rnd.Next(-10, 10) > 0 ? 1 : -1;
+
+                avl.Insert(sign * i, "a");
+            }
+
+            Assert.True((double)avl.Height() <= Math.Ceiling(Math.Log(10000, 2)));
         }
     }
 }
