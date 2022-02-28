@@ -123,6 +123,43 @@ namespace AVLTree
         /// </summary>
         public bool Remove(TKey key)
         {
+            var node = Find(key);
+
+            if (node == null)
+            {
+                throw new KeyNotFoundException();
+            }
+
+            if (node.Left == null || node.Right == null)
+            {
+                node.Height -= 1;
+                node.RecalculateHeight();
+
+                var v = node.Left ?? node.Right;
+                var tmp = node.Parent;
+
+                if (tmp == null)
+                {
+                    Root = v;
+                }
+                else if (node == tmp.Left)
+                {
+                    tmp.Left = v;
+                }
+                else
+                {
+                    tmp.Right = v;
+                }
+
+                if (v != null)
+                {
+                    v.Parent = tmp;
+                }
+
+                BalanceTree(tmp);
+
+                return true;
+            }
 
             return false;
         }
