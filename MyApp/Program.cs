@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using AVLTree;
 
 namespace MyApp
@@ -8,44 +9,41 @@ namespace MyApp
     {
         static void Main(string[] args)
         {
-            ////Генерация массива из 10к случайных элементов
-            //List<int> randomIntegers = new List<int>();
-            //Random random = new Random(DateTime.Now.Millisecond);
-
-            //while (randomIntegers.Count < 10000){
-            //    int newRandomInteger = random.Next(-50000, 50000);
-
-            //    if (!randomIntegers.Contains(newRandomInteger))
-            //        randomIntegers.Add(newRandomInteger);
-            //}
-
-            ////Создание дерева и его заполнение сгенерированными числами
             AVL<int, int> avl = new AVL<int, int>();
 
-            //int ord = 0;
-            //foreach (int i in randomIntegers)
-            //{
-            //    avl.Insert(i, ord++);
-            //}
+            SortedDictionary<int, int> sd = new SortedDictionary<int, int>();
 
-            //for (int i = 1; i <= 54 / 2; i++)
-            //{
-            //    int sign = (int)Math.Pow(-1, i);
-            //    int item = (int)((long)Math.Pow(5, i) % 162);
-            //    avl.Insert(sign * item, "a");
-            //}
+            for (int i = 0; i < 100; i++)
+            {
+                avl.Insert(i, i);
+                sd.Add(i, i);
+            }
 
-            avl.Insert(2, 1);
-            avl.Insert(3, 1);
-            avl.Insert(4, 1);
-            avl.Insert(5, 1);
+            avl.Clear();
+            sd.Clear();
 
-            TreeNodePrinter.Print(avl.Root);
+            Stopwatch sw = new Stopwatch();
 
-            avl.Remove(4);
+            List<int> randomIntegers = new List<int>();
+            Random random = new Random(DateTime.Now.Millisecond);
 
-            TreeNodePrinter.Print(avl.Root);
+            while (randomIntegers.Count < 30)
+            {
+                int newRandomInteger = random.Next(-50, 50);
 
+                if (!randomIntegers.Contains(newRandomInteger))
+                    randomIntegers.Add(newRandomInteger);
+            }
+
+            Console.WriteLine("Integers generated");
+
+            foreach (int i in randomIntegers)
+            {
+                avl.Insert(i, 0);
+                TreeNodePrinter.Print(avl.Root);
+            }
+
+            Console.WriteLine("STOP");
             Console.ReadKey();
         }
     }

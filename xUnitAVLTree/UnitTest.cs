@@ -28,14 +28,10 @@ namespace xUnitAVLTree
             Assert.Equal(oldItemsCountInAVL + 1, newItemsCountInAVL);
         }
 
-        //При добавлении элемента нового элемента в дерево ожидается true.
         [Fact]
         public void Test3()
         {
-            AVL<int, string> avl = new AVL<int, string>();
-            bool resultInsertation = avl.Insert(0, "A");
-
-            Assert.True(resultInsertation);
+            
         }
 
         //При повторном добавлении элемента с одинаковым ключом ожидается DuplicationItemsInTreeException

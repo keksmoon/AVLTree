@@ -30,6 +30,12 @@ namespace AVLTree
             return node.Height;
         }
 
+        public void Clear()
+        {
+            Root = null;
+            Count = 0;
+        }
+
         /// <summary>
         /// Метод, возвращающий высоту всего дерева от корня.
         /// </summary>
@@ -51,117 +57,106 @@ namespace AVLTree
         /// <summary>
         /// Добавление в дерево нового элемента.
         /// </summary>
-        public bool Insert(TKey key, TValue value)
+        public void Insert(TKey key, TValue value)
         {
-            Node<TKey, TValue> newItem = new Node<TKey, TValue>(key, value);
-
             if (Root == null)
             {
-                //Если дерево пусто, заменяем его на дерево с одним узлом newItem.
-                Root = newItem;
-                Root.Height = 1;
-                Count++;
+                Root = new Node<TKey, TValue>(key, value);
             }
             else
             {
-                var currentNode = Root;
+                var parentNode = Find(key);
+                var resultComparison = parentNode.Key.CompareTo(key);
 
-                //Иначе необходимо:
-                //  1. Найти место для вставки нового элемента.
-                //     Если элемент с таким же ключом существует, то throw DuplicationItemsInTreeException.
-                //  2. Если подходящее место найдено, то вставляем элемент.
-                //     Иначе продолжаем поиск.
-
-                while (currentNode != null)
+                if (resultComparison == 0)
                 {
-                    var resultComparison = newItem.Key.CompareTo(currentNode.Key);
-                    // -1 если элемент для вставки меньше рассматриваемого
-                    // 1 если элемент для вставки больше рассматриваемого
-
-                    if (resultComparison < 0)
-                    {
-                        if (currentNode.Left == null)
-                        {
-                            newItem.Parent = currentNode;
-                            currentNode.Left = newItem;
-                            currentNode.Left.RecalculateHeight();
-                            BalanceTree(currentNode);
-                            Count++;
-
-                            return true;
-                        }
-
-                        currentNode = currentNode.Left;
-                    }
-                    else if (resultComparison > 0)
-                    {
-                        if (currentNode.Right == null)
-                        {
-                            newItem.Parent = currentNode;
-                            currentNode.Right = newItem;
-                            currentNode.Right.RecalculateHeight();
-                            BalanceTree(currentNode);
-                            Count++;
-
-                            return true;
-                        }
-
-                        currentNode = currentNode.Right;
-                    }
-                    else
-                    {
-                        throw new DuplicationItemsInTreeException();
-                    }
+                    throw new DuplicationItemsInTreeException();
                 }
+                else if (resultComparison < 0)
+                {
+                    parentNode.Right = new Node<TKey, TValue>(key, value, parentNode);
+                }
+                else
+                {
+                    parentNode.Left = new Node<TKey, TValue>(key, value, parentNode);
+                }
+
+                parentNode.RecalculateHeight();
+                BalanceTree(parentNode);
             }
 
-            return true;
+            Count++;
         }
-
         /// <summary>
         /// Удаление элемента из дерева по ключу.
         /// </summary>
-        public bool Remove(TKey key)
+        public void Remove(TKey key)
         {
             var node = Find(key);
 
-            if (node == null)
-            {
+            if (node.Key.CompareTo(key) != 0)
                 throw new KeyNotFoundException();
-            }
 
             if (node.Left == null || node.Right == null)
             {
-                node.Height -= 1;
-                node.RecalculateHeight();
-
                 var v = node.Left ?? node.Right;
                 var tmp = node.Parent;
 
                 if (tmp == null)
-                {
                     Root = v;
-                }
                 else if (node == tmp.Left)
-                {
                     tmp.Left = v;
+                else
+                    tmp.Right = v;
+
+                if (v != null)
+                    v.Parent = tmp;
+
+                tmp.RecalculateHeight();
+
+                BalanceTree(tmp);
+            }
+            else
+            {
+                var newNode = node.Left;
+
+                bool inLeft = true;
+                while (newNode.Right != null)
+                {
+                    inLeft = false;
+                    newNode = newNode.Right;
+                }
+
+                var tmp = newNode;
+
+                if (tmp.Left != null)
+                {
+                    tmp.Parent.Left = tmp.Left;
+                    tmp.Left = tmp.Parent;
                 }
                 else
                 {
-                    tmp.Right = v;
+                    if (!inLeft)
+                        tmp.Parent.Right = null;
+                    else
+                        tmp.Parent.Left = null;
+
+                    tmp.Parent.RecalculateHeight();
                 }
 
-                if (v != null)
+                node.Key = tmp.Key;
+                node.Value = tmp.Value;
+
+                // а зачем нам спускаться непонятно куда??
+                while (node.Right != null || node.Left != null)
                 {
-                    v.Parent = tmp;
+                    node = node.Right ?? node.Left;
                 }
 
-                BalanceTree(tmp);
-
-                return true;
+                BalanceTree(node);
             }
 
-            return false;
+            Count--;
         }
 
         /// <summary>
@@ -173,7 +168,7 @@ namespace AVLTree
         public bool TryGetValue(TKey key, out TValue value)
         {
             Node<TKey, TValue> current = Find(key);
-            if (current == null)
+            if (current.Key.CompareTo(key) != 0)
             {
                 value = default(TValue);
                 return false;
@@ -187,7 +182,7 @@ namespace AVLTree
         /// Выполняет поиск узла по ключу.
         /// </summary>
         /// <param name="key"></param>
-        /// <returns>Если узел найден, то возращает узел. В противном случае null.</returns>
+        /// <returns>Если узел найден, то возращает узел. В противном случае родительский узел.</returns>
         private Node<TKey, TValue> Find(TKey key)
         {
             var current = Root;
@@ -197,11 +192,15 @@ namespace AVLTree
 
                 if (result > 0)
                 {
-                    current = current.Left;
+                    if (current.Left == null)
+                        break;
+                    current = current.Left ?? current;
                 }
                 else if (result < 0)
                 {
-                    current = current.Right;
+                    if (current.Right == null)
+                        break;
+                    current = current.Right ?? current;
                 }
                 else
                 {
@@ -265,91 +264,69 @@ namespace AVLTree
         /// <summary>
         /// Осуществляет поворот АВЛ-поддерева налево.
         /// </summary>
-        internal Node<TKey, TValue> RotateLeft(Node<TKey, TValue> node)
+        internal void RotateLeft(Node<TKey, TValue> node)
         {
-            node.Height -= 2; //узел будет понижаться -> упадет его высота
-
-            var newRoot = node.Right;
-            var newRootLeft = newRoot.Left;
-            var parent = node.Parent;
-
-            newRoot.Parent = parent;
-            newRoot.Left = node;
-            node.Right = newRootLeft;
-            node.Parent = newRoot;
-
-            if (newRootLeft != null)
+            Node<TKey, TValue> newNode = node.Right;
+            node.Right = newNode.Left;
+            if (newNode.Left != null)
             {
-                newRootLeft.Parent = node;
+                newNode.Left.Parent = node;
             }
 
-            if (node == Root)
+            newNode.Parent = node.Parent;
+
+            if (node.Parent == null)
             {
-                Root = newRoot;
+                Root = newNode;
             }
-            else if (parent.Right == node)
+            else if (node == node.Parent.Left)
             {
-                parent.Right = newRoot;
-                if (newRoot.Right.Right != null)
-                    newRoot.Right.Right.RecalculateHeight();
+                node.Parent.Left = newNode;
             }
             else
             {
-                parent.Left = newRoot;
-                if (newRoot.Left.Left != null)
-                    newRoot.Left.Left.RecalculateHeight();
+                node.Parent.Right = newNode;
             }
 
-            //здесь newRoot "в цепочке". Надо пробежать по его родителям и пересчитать высоты
-            //за основу брать высоту newRoot и его брата если есть
-            newRoot.RecalculateHeight();
+            newNode.Left = node;
+            node.Parent = newNode;
 
-            //Как сделать, чтобы высоты были нормально!!!
-
-            return newRoot;
+            node.RecalculateHeight();
+            newNode.RecalculateHeight();
         }
 
         /// <summary>
         /// Осуществляет поворот АВЛ-поддерева направо.
         /// </summary>
-        internal Node<TKey, TValue> RotateRight(Node<TKey, TValue> node)
+        internal void RotateRight(Node<TKey, TValue> node)
         {
-            node.Height -= 2;
-
-            var newRoot = node.Left;
-            var newRootRight = newRoot.Right;
-            var parent = node.Parent;
-
-            newRoot.Parent = parent;
-            newRoot.Right = node;
-            node.Left = newRootRight;
-            node.Parent = newRoot;
-
-            if (newRootRight != null)
+            Node<TKey, TValue> newNode = node.Left;
+            node.Left = newNode.Right;
+            if (newNode.Right != null)
             {
-                newRootRight.Parent = node;
+                newNode.Right.Parent = node;
             }
 
-            if (node == Root)
-            {
-                Root = newRoot;
+            newNode.Parent = node.Parent;
+
+            if (node.Parent == null)
+            { 
+                Root = newNode;
             }
-            else if (parent.Left == node)
-            {
-                parent.Left = newRoot;
-                if (newRoot.Left.Left != null)
-                    newRoot.Left.Left.RecalculateHeight();
+            else if (node == node.Parent.Right)
+            { 
+                node.Parent.Right = newNode;
             }
             else
             {
-                parent.Right = newRoot;
-                if (newRoot.Right.Right != null)
-                    newRoot.Right.Right.RecalculateHeight();
+                node.Parent.Left = newNode;
             }
 
-            newRoot.RecalculateHeight();
+            newNode.Right = node;
+            node.Parent = newNode;
 
-            return newRoot;
+            node.RecalculateHeight();
+            newNode.RecalculateHeight();
         }
 
         /// <summary>
