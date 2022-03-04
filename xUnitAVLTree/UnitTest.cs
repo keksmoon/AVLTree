@@ -426,5 +426,34 @@ namespace xUnitAVLTree
 
             Assert.Equal(0, CntItemsInOrderTraversalResults);
         }
+
+        //Проверка всех вариантов на set (одиночный лист, корень дерева, два потомка, без потомков)
+        [Fact]
+        public void Test30()
+        {
+            AVL<int, string> avl = new AVL<int, string>();
+            avl.Insert(2, "c");
+            avl.Insert(1, "b");
+            avl.Insert(0, "a");
+            avl.Insert(4, "e");
+            avl.Insert(3, "d");
+            avl.Insert(5, "f");
+            string expected_a0 = "aa";
+            string expected_b1 = "bb";
+            string expected_c2 = "cc";
+            string expected_d3 = "dd";
+            string expected_e4 = "ee";
+            string expected_f5 = "ff";
+            string[] massivexpected = { expected_a0, expected_b1, expected_c2, expected_d3, expected_e4,expected_f5 };
+            for (int i = 0; i < avl.Count; i++)
+            {
+                avl[i] = avl[i] + avl[i];
+            }
+            for (int i = 0; i < avl.Count; i++)
+            {
+                Assert.Equal(avl[i], massivexpected[i]);
+            }
+
+        }
     }
 }

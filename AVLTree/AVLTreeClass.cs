@@ -379,12 +379,18 @@ namespace AVLTree
             set
             {
                 var node = Find(key);
-                if (node==null)
+                if (this.Root.Key.Equals(key))
+                {
+                    this.Root.Value = value;
+                }
+                else if (node.Key.Equals(key))
+                {
+                    node.Value = value;
+                }
+                else
                 {
                     throw new KeyNotFoundException();
                 }
-
-                node.Value = value;
             }
         }
     }

@@ -42,7 +42,7 @@ namespace MyApp
                 avl.Insert(i, 0);
                 TreeNodePrinter.Print(avl.Root);
             }
-
+            TreeNodePrinter.Print(avl.Root);
             Console.WriteLine("STOP");
             Console.ReadKey();
         }
