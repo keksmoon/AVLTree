@@ -30,6 +30,9 @@ namespace AVLTree
             return node.Height;
         }
 
+        /// <summary>
+        /// Выполняет очистку дерева от всех элементов.
+        /// </summary>
         public void Clear()
         {
             Root = null;
@@ -44,7 +47,7 @@ namespace AVLTree
         /// <summary>
         /// Высчитывает баланс узла как разность высот его левого и правого поддеревьев.
         /// </summary>
-        public int GetBalance(Node<TKey, TValue> node)
+        internal int GetBalance(Node<TKey, TValue> node)
         {
             if (node == null)
             {
@@ -93,8 +96,26 @@ namespace AVLTree
         /// </summary>
         /// <param name="replaceableNode">Узел, который необходимо заместить.</param>
         /// <param name="successorNode">Узел, который встанет на место замещенного.</param>
-        public void ReplaceNodes(Node<TKey, TValue> replaceableNode, Node<TKey, TValue> successorNode)
+        internal void ReplaceNodes(Node<TKey, TValue> replaceableNode, Node<TKey, TValue> successorNode)
         {
+            if (successorNode == null)
+            {
+                if (replaceableNode == Root)
+                {
+                    Root = null;
+                }
+                else if (replaceableNode.Parent.Left != null && replaceableNode.Parent.Left == replaceableNode)
+                {
+                    replaceableNode.Parent.Left = null;
+                }
+                else
+                {
+                    replaceableNode.Parent.Right = null;
+                }
+
+                return;
+            }
+
             replaceableNode.Key = successorNode.Key;
             replaceableNode.Value = successorNode.Value;
 
@@ -146,7 +167,8 @@ namespace AVLTree
             //Предложение:
             // 1. Находим узел, который необходимо удалить 
             // 2. Подбираем узел, который встанет на место удаляемого
-            //    Один раз налево и до упора направоы
+            //    Один раз налево и до упора направо
+            //    Заменяем
             // 3. Выполняем пересчет высот от родителя узла, 
             //    который был подобран для замены
             //    И пересчет от узла, который был заменен
@@ -157,9 +179,40 @@ namespace AVLTree
                 throw new KeyNotFoundException();
             }
 
+            var successorNode = removableNode;
+            Node<TKey, TValue> successorNodeParent = null;
 
+            if (successorNode.Left != null)
+            {
+                successorNode = successorNode.Left;
 
-            
+                while (successorNode.Right != null)
+                {
+                    successorNode = successorNode.Right;
+                }
+
+                successorNodeParent = successorNode.Parent;
+            } else if (successorNode.Right != null)
+            {
+                successorNode = successorNode.Right;
+
+                while (successorNode.Left != null)
+                {
+                    successorNode = successorNode.Left;
+                }
+
+                successorNodeParent = successorNode.Parent;
+            } else
+            {
+                successorNode = null;
+            }
+
+            ReplaceNodes(removableNode, successorNode);
+
+            if (successorNodeParent != null)
+                successorNodeParent.RecalculateHeight();
+
+            Count--;
         }
 
         /// <summary>
@@ -217,7 +270,7 @@ namespace AVLTree
         /// <summary>
         /// Выполняет балансировку дереву.
         /// </summary>
-        public void BalanceTree(Node<TKey, TValue> node)
+        internal void BalanceTree(Node<TKey, TValue> node)
         {
             //Балансировка необходима <=> когда высота левого и правого поддеревьев = 2
             //идея алгоритма балансировки: 
@@ -382,7 +435,8 @@ namespace AVLTree
             set
             {
                 var node = Find(key);
-                if (node.Key.Equals(key))
+
+                if (node.Key.CompareTo(key) == 0)
                 {
                     node.Value = value;
                 }

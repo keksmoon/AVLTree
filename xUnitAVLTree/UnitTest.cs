@@ -135,18 +135,10 @@ namespace xUnitAVLTree
             Assert.Equal(2, avl.Height());
         }
 
-        //При добавлении трех упорядоченных элементов в пустое дерево, баланс дерева должен быть 0
         [Fact]
         public void Test12()
         {
-            AVL<int, string> avl = new AVL<int, string>();
 
-            for (int i = 1; i < 4; ++i)
-            {
-                avl.Insert(i, String.Empty);
-            }
-
-            Assert.Equal(0, avl.GetBalance(avl.Root));
         }
 
         //Нагрузка самого правого поддерева 10 элементами и проверка, что там есть все ключи
