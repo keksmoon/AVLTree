@@ -455,5 +455,157 @@ namespace xUnitAVLTree
             }
 
         }
+        //Проверка на удаление элементов, где левое-левое поддерево перевешивает
+        [Fact]
+        public void Test31()
+        {
+            List<AVL<int, int>> avls = new List<AVL<int, int>>();
+            for (int i = 0; i < 9; i++)
+            {
+                AVL<int, int> avl = new AVL<int, int>();
+                avls.Add(avl);
+            }
+            for (int i = 0; i<avls.Count; i++)
+            {
+                avls[i].Insert(5, 0);
+                avls[i].Insert(3, 0);
+                avls[i].Insert(7, 0);
+                avls[i].Insert(1, 0);
+                avls[i].Insert(4, 0);
+                avls[i].Insert(6, 0);
+                avls[i].Insert(8, 0);
+                avls[i].Insert(0, 0);
+                avls[i].Insert(2, 0);
+            }
+            List<int> keyValues = new List<int>() {0,1,2,3,4,5,6,7,8};
+            for (int i = 0; i < avls.Count; i++)
+            {
+                avls[i].Remove(i);
+                keyValues.Remove(i);
+                keyValues.Sort();
+                var q = avls[i].InorderTraversal();
+                int k = 0;
+                foreach (var j in q)
+                {
+                    Assert.Equal(j.Key, keyValues[k]);
+                    k++;
+                }
+                keyValues.Add(i);
+            }
+        }
+
+        [Fact]
+        public void Test32()
+        {
+            List<AVL<int, int>> avls = new List<AVL<int, int>>();
+            for (int i = 0; i < 9; i++)
+            {
+                AVL<int, int> avl = new AVL<int, int>();
+                avls.Add(avl);
+            }
+            for (int i = 0; i < avls.Count; i++)
+            {
+                avls[i].Insert(5, 0);
+                avls[i].Insert(1, 0);
+                avls[i].Insert(7, 0);
+                avls[i].Insert(0, 0);
+                avls[i].Insert(3, 0);
+                avls[i].Insert(6, 0);
+                avls[i].Insert(8, 0);
+                avls[i].Insert(2, 0);
+                avls[i].Insert(4, 0);
+            }
+            List<int> keyValues = new List<int>() { 0, 1, 2, 3, 4, 5, 6, 7, 8 };
+            for (int i = 0; i < avls.Count; i++)
+            {
+                avls[i].Remove(i);
+                keyValues.Remove(i);
+                keyValues.Sort();
+                var q = avls[i].InorderTraversal();
+                int k = 0;
+                foreach (var j in q)
+                {
+                    Assert.Equal(j.Key, keyValues[k]);
+                    k++;
+                }
+                keyValues.Add(i);
+            }
+        }
+
+        [Fact]
+        public void Test33()
+        {
+            List<AVL<int, int>> avls = new List<AVL<int, int>>();
+            for (int i = 0; i < 9; i++)
+            {
+                AVL<int, int> avl = new AVL<int, int>();
+                avls.Add(avl);
+            }
+            for (int i = 0; i < avls.Count; i++)
+            {
+                avls[i].Insert(3, 0);
+                avls[i].Insert(1, 0);
+                avls[i].Insert(7, 0);
+                avls[i].Insert(0, 0);
+                avls[i].Insert(2, 0);
+                avls[i].Insert(5, 0);
+                avls[i].Insert(8, 0);
+                avls[i].Insert(4, 0);
+                avls[i].Insert(6, 0);
+            }
+            List<int> keyValues = new List<int>() { 0, 1, 2, 3, 4, 5, 6, 7, 8 };
+            for (int i = 0; i < avls.Count; i++)
+            {
+                avls[i].Remove(i);
+                keyValues.Remove(i);
+                keyValues.Sort();
+                var q = avls[i].InorderTraversal();
+                int k = 0;
+                foreach (var j in q)
+                {
+                    Assert.Equal(j.Key, keyValues[k]);
+                    k++;
+                }
+                keyValues.Add(i);
+            }
+        }
+
+        [Fact]
+        public void Test34()
+        {
+            List<AVL<int, int>> avls = new List<AVL<int, int>>();
+            for (int i = 0; i < 9; i++)
+            {
+                AVL<int, int> avl = new AVL<int, int>();
+                avls.Add(avl);
+            }
+            for (int i = 0; i < avls.Count; i++)
+            {
+                avls[i].Insert(3, 0);
+                avls[i].Insert(1, 0);
+                avls[i].Insert(5, 0);
+                avls[i].Insert(0, 0);
+                avls[i].Insert(2, 0);
+                avls[i].Insert(4, 0);
+                avls[i].Insert(7, 0);
+                avls[i].Insert(8, 0);
+                avls[i].Insert(6, 0);
+            }
+            List<int> keyValues = new List<int>() { 0, 1, 2, 3, 4, 5, 6, 7, 8 };
+            for (int i = 0; i < avls.Count; i++)
+            {
+                avls[i].Remove(i);
+                keyValues.Remove(i);
+                keyValues.Sort();
+                var q = avls[i].InorderTraversal();
+                int k = 0;
+                foreach (var j in q)
+                {
+                    Assert.Equal(j.Key, keyValues[k]);
+                    k++;
+                }
+                keyValues.Add(i);
+            }
+        }
     }
 }
