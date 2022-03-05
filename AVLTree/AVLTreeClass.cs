@@ -87,13 +87,79 @@ namespace AVLTree
 
             Count++;
         }
+
+        /// <summary>
+        /// Замещение узла в дереве другим узлом.
+        /// </summary>
+        /// <param name="replaceableNode">Узел, который необходимо заместить.</param>
+        /// <param name="successorNode">Узел, который встанет на место замещенного.</param>
+        public void ReplaceNodes(Node<TKey, TValue> replaceableNode, Node<TKey, TValue> successorNode)
+        {
+            replaceableNode.Key = successorNode.Key;
+            replaceableNode.Value = successorNode.Value;
+
+            if (successorNode.Parent != null)
+            {
+                if (successorNode.Left != null)
+                {
+                    successorNode.Left.Parent = successorNode.Parent;
+                    if (successorNode.Parent.Left == successorNode)
+                    {
+                        successorNode.Parent.Left = successorNode.Left;
+                    }
+                    else
+                    {
+                        successorNode.Parent.Right = successorNode.Left;
+                    }
+                }
+                else if (successorNode.Right != null)
+                {
+                    successorNode.Right.Parent = successorNode.Parent;
+                    if (successorNode.Parent.Left == successorNode)
+                    {
+                        successorNode.Parent.Left = successorNode.Right;
+                    }
+                    else
+                    {
+                        successorNode.Parent.Right = successorNode.Right;
+                    }
+                }
+                else
+                {
+                    if (successorNode.Parent.Left == successorNode)
+                    {
+                        successorNode.Parent.Left = null;
+                    }
+                    else
+                    {
+                        successorNode.Parent.Right = null;
+                    }
+                }
+            }
+        }
+
         /// <summary>
         /// Удаление элемента из дерева по ключу.
         /// </summary>
         public void Remove(TKey key)
         {
+            //Предложение:
+            // 1. Находим узел, который необходимо удалить 
+            // 2. Подбираем узел, который встанет на место удаляемого
+            //    Один раз налево и до упора направоы
+            // 3. Выполняем пересчет высот от родителя узла, 
+            //    который был подобран для замены
+            //    И пересчет от узла, который был заменен
+            var removableNode = Find(key);
 
-           
+            if (removableNode.Key.CompareTo(key) != 0)
+            {
+                throw new KeyNotFoundException();
+            }
+
+
+
+            
         }
 
         /// <summary>
@@ -179,7 +245,7 @@ namespace AVLTree
                     }
 
                 }
-                else if (balance < 1)
+                else if (balance < -1)
                 {
                     int rightbalance = GetBalance(node.Right);
 
