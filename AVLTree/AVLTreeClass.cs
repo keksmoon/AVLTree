@@ -287,30 +287,24 @@ namespace AVLTree
                 {
                     int leftbalance = GetBalance(node.Left);
 
-                    if (leftbalance > 0)
-                    {
-                        RotateRight(node);
-                    }
-                    else
+                    if (leftbalance <= 0)
                     {
                         RotateLeft(node.Left);
-                        RotateRight(node);
                     }
+
+                    RotateRight(node);
 
                 }
                 else if (balance < -1)
                 {
                     int rightbalance = GetBalance(node.Right);
 
-                    if (rightbalance < 0)
-                    {
-                        RotateLeft(node);
-                    }
-                    else
+                    if (rightbalance >= 0)
                     {
                         RotateRight(node.Right);
-                        RotateLeft(node);
                     }
+
+                    RotateLeft(node);
                 }
 
                 node = node.Parent;
