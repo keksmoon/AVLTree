@@ -92,71 +92,8 @@ namespace AVLTree
         /// </summary>
         public void Remove(TKey key)
         {
-            var node = Find(key);
 
-            if (node.Key.CompareTo(key) != 0)
-                throw new KeyNotFoundException();
-
-            if (node.Left == null || node.Right == null)
-            {
-                var v = node.Left ?? node.Right;
-                var tmp = node.Parent;
-
-                if (tmp == null)
-                    Root = v;
-                else if (node == tmp.Left)
-                    tmp.Left = v;
-                else
-                    tmp.Right = v;
-
-                if (v != null)
-                    v.Parent = tmp;
-
-                tmp.RecalculateHeight();
-
-                BalanceTree(tmp);
-            }
-            else
-            {
-                var newNode = node.Left;
-
-                bool inLeft = true;
-                while (newNode.Right != null)
-                {
-                    inLeft = false;
-                    newNode = newNode.Right;
-                }
-
-                var tmp = newNode;
-
-                if (tmp.Left != null)
-                {
-                    tmp.Parent.Left = tmp.Left;
-                    tmp.Left = tmp.Parent;
-                }
-                else
-                {
-                    if (!inLeft)
-                        tmp.Parent.Right = null;
-                    else
-                        tmp.Parent.Left = null;
-
-                    tmp.Parent.RecalculateHeight();
-                }
-
-                node.Key = tmp.Key;
-                node.Value = tmp.Value;
-
-                // а зачем нам спускаться непонятно куда??
-                while (node.Right != null || node.Left != null)
-                {
-                    node = node.Right ?? node.Left;
-                }
-
-                BalanceTree(node);
-            }
-
-            Count--;
+           
         }
 
         /// <summary>
@@ -379,12 +316,14 @@ namespace AVLTree
             set
             {
                 var node = Find(key);
-                if (node==null)
+                if (node.Key.Equals(key))
+                {
+                    node.Value = value;
+                }
+                else
                 {
                     throw new KeyNotFoundException();
                 }
-
-                node.Value = value;
             }
         }
     }
