@@ -227,11 +227,11 @@ namespace AVLTree
             {
                 int balance = GetBalance(node);
 
-                if (balance == 2)
+                if (balance > 1)
                 {
                     int leftbalance = GetBalance(node.Left);
 
-                    if (leftbalance == 1)
+                    if (leftbalance > 0)
                     {
                         RotateRight(node);
                     }
@@ -242,11 +242,11 @@ namespace AVLTree
                     }
 
                 }
-                else if (balance == -2)
+                else if (balance < 1)
                 {
                     int rightbalance = GetBalance(node.Right);
 
-                    if (rightbalance == -1)
+                    if (rightbalance < 0)
                     {
                         RotateLeft(node);
                     }
