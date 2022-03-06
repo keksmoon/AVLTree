@@ -9,7 +9,7 @@ namespace xUnitAVLTree
     {
         // При создании дерева, количество элементов в нем должно быть 0.
         [Fact]
-        public void Test1()
+        public void AfterCreationAVLTreeCountEqualsZero()
         {
             AVL<int, string> avl = new AVL<int, string>();
 
@@ -18,7 +18,7 @@ namespace xUnitAVLTree
 
         //При добавлении элемента в дерево количество элементов +1.
         [Fact]
-        public void Test2()
+        public void CountIncreaseAfterInsertingElement()
         {
             AVL<int, string> avl = new AVL<int, string>();
             int oldItemsCountInAVL = avl.Count;
@@ -28,15 +28,9 @@ namespace xUnitAVLTree
             Assert.Equal(oldItemsCountInAVL + 1, newItemsCountInAVL);
         }
 
-        [Fact]
-        public void Test3()
-        {
-            
-        }
-
         //При повторном добавлении элемента с одинаковым ключом ожидается DuplicationItemsInTreeException
         [Fact]
-        public void Test4()
+        public void ThrowingDuplicationItemsInTreeException()
         {
             AVL<int, string> avl = new AVL<int, string>();
             avl.Insert(0, "A");
@@ -50,7 +44,7 @@ namespace xUnitAVLTree
 
         //При добавлении элемента он должен стать корнем дерева.
         [Fact]
-        public void Test5()
+        public void AfterInsertingElementInEmptyAVLTreeThisElementIsRoot()
         {
             AVL<int, string> avl = new AVL<int, string>();
             avl.Insert(0, "A");
@@ -60,7 +54,7 @@ namespace xUnitAVLTree
 
         //При добавлении элемента меньше чем корень дерева, он должен быть установлен левее корня.
         [Fact]
-        public void Test6()
+        public void AfterInsertingElementWhichLessRootItShouldBeOnTheLeft()
         {
             AVL<int, string> avl = new AVL<int, string>();
             avl.Insert(0, "A");
@@ -69,9 +63,9 @@ namespace xUnitAVLTree
             Assert.Equal(-1, avl.Root.Left.Key);
         }
 
-        //При добавлении элемента больше чем корень дерева, он должен быть установлен левее корня.
+        //При добавлении элемента больше чем корень дерева, он должен быть установлен правее корня.
         [Fact]
-        public void Test7()
+        public void AfterInsertingElementWhichMoreRootItShouldBeOnTheRight()
         {
             AVL<int, string> avl = new AVL<int, string>();
             avl.Insert(0, "A");
@@ -80,9 +74,9 @@ namespace xUnitAVLTree
             Assert.Equal(1, avl.Root.Right.Key);
         }
 
-        //При сцеплении двух узлов, один должен быть parent, другой left & right
+        //При сцеплении (объединение) двух узлов, один должен быть parent, другой left & right
         [Fact]
-        public void Test8()
+        public void AfterUnionNodesOneMustBeParentAnotherLeftOrRight()
         {
             AVL<int, string> avl = new AVL<int, string>();
             avl.Insert(0, "A");
@@ -95,7 +89,7 @@ namespace xUnitAVLTree
 
         //В пустом дереве выста дерева должна быть 0
         [Fact]
-        public void Test9()
+        public void HeightInEmptyTreeEqualsZero()
         {
             AVL<int, string> avl = new AVL<int, string>();
 
@@ -104,7 +98,7 @@ namespace xUnitAVLTree
 
         //При добавлении двух упорядоченных элементов в пустое дерево, высота должна увеличиваться
         [Fact]
-        public void Test10()
+        public void AfterInsertingTwoOrderedElementsInEmptyTreeHeightEqualsTwo()
         {
             //   1
             //    \
@@ -120,7 +114,7 @@ namespace xUnitAVLTree
 
         //После добавления трех упорядоченных элементов в пустое дерево, высота должна быть 2
         [Fact]
-        public void Test11()
+        public void AfterInsertingThreeOrderedElementsInEmptyTreeHeightEqualsTwo()
         {
             //   2
             //  / \
@@ -135,15 +129,9 @@ namespace xUnitAVLTree
             Assert.Equal(2, avl.Height());
         }
 
-        [Fact]
-        public void Test12()
-        {
-
-        }
-
         //Нагрузка самого правого поддерева 10 элементами и проверка, что там есть все ключи
         [Fact]
-        public void Test13()
+        public void AfterRightInserting10OrderedElementsInEmptyTreeAndCheckWhatKeysMustBeStored()
         {
             AVL<int, int> avl = new AVL<int, int>();
             for (int i = 0; i < 10; i++)
@@ -165,7 +153,7 @@ namespace xUnitAVLTree
 
         //Нагрузка самого правого поддерева 10 элементами и проверка, что там есть все значения
         [Fact]
-        public void Test14()
+        public void AfterRightInserting10OrderedElementsInEmptyTreeAndCheckWhatValuesMustBeStored()
         {
             AVL<int, int> avl = new AVL<int, int>();
             for (int i = 0; i < 10; i++)
@@ -187,7 +175,7 @@ namespace xUnitAVLTree
 
         //Нагрузка самого левого поддерева 10 элементами и проверка, что там есть все ключи
         [Fact]
-        public void Test15()
+        public void AfterLeftInserting10OrderedElementsInEmptyTreeAndCheckWhatKeysMustBeStored()
         {
             AVL<int, int> avl = new AVL<int, int>();
             for (int i = 0; i < 10; i++)
@@ -209,7 +197,7 @@ namespace xUnitAVLTree
 
         //Нагрузка самого левого поддерева 10 элементами и проверка, что там есть все значения
         [Fact]
-        public void Test16()
+        public void AfterLeftInserting10OrderedElementsInEmptyTreeAndCheckWhatValuesMustBeStored()
         {
             AVL<int, int> avl = new AVL<int, int>();
             for (int i = 0; i < 10; i++)
@@ -231,7 +219,7 @@ namespace xUnitAVLTree
 
         //Нагрузка правого-левого поддерева элементами и проверка, что там есть все ключи
         [Fact]
-        public void Test17()
+        public void AfterRightLeftInserting10OrderedElementsInEmptyTreeAndCheckWhatKeysMustBeStored()
         {
             AVL<int, int> avl = new AVL<int, int>();
             avl.Insert(5, 5);
@@ -252,7 +240,7 @@ namespace xUnitAVLTree
 
         //Нагрузка правого-левого поддерева элементами и проверка, что там есть все значения
         [Fact]
-        public void Test18()
+        public void AfterRightLeftInserting10OrderedElementsInEmptyTreeAndCheckWhatValuesMustBeStored()
         {
             AVL<int, int> avl = new AVL<int, int>();
             avl.Insert(5, 5);
@@ -272,7 +260,7 @@ namespace xUnitAVLTree
 
         //Нагрузка левого-правого поддерева элементами и проверка, что там есть все ключи
         [Fact]
-        public void Test19()
+        public void AfterLeftRightInserting10OrderedElementsInEmptyTreeAndCheckWhatKeysMustBeStored()
         {
             AVL<int, int> avl = new AVL<int, int>();
             avl.Insert(-5, -5);
@@ -292,7 +280,7 @@ namespace xUnitAVLTree
         }
         //Нагрузка левого-правого поддерева элементами и проверка, что там есть все значения
         [Fact]
-        public void Test20()
+        public void AfterLeftRightInserting10OrderedElementsInEmptyTreeAndCheckWhatValuesMustBeStored()
         {
             AVL<int, int> avl = new AVL<int, int>();
             avl.Insert(-5, -5);
@@ -312,7 +300,7 @@ namespace xUnitAVLTree
 
         //Проверка метода TryGetValue - true, если ключ находится
         [Fact]
-        public void Test21()
+        public void TryGetValueEqualTrueIfElementMustBeStored()
         {
             AVL<int, string> avl = new AVL<int, string>();
             avl.Insert(0, "a");
@@ -322,7 +310,7 @@ namespace xUnitAVLTree
 
         //Проверка метода TryGetValue - значение элемента возвращено, если ключ находится
         [Fact]
-        public void Test22()
+        public void TryGetValueReturnedValueIfElementMustBeSrored()
         {
             AVL<int, string> avl = new AVL<int, string>();
             string expected = "a";
@@ -334,7 +322,7 @@ namespace xUnitAVLTree
 
         //Проверка метода TryGetValue - false, если ключ не находится
         [Fact]
-        public void Test23()
+        public void TryGetValueEqualFalseIfElementMustNotBeStored()
         {
             AVL<int, string> avl = new AVL<int, string>();
             avl.Insert(0, "a");
@@ -344,7 +332,7 @@ namespace xUnitAVLTree
 
         //Проверка метода TryGetValue - значение элемента не возвращено, если ключ не находится
         [Fact]
-        public void Test24()
+        public void TryGetValueNotReturnedValueIfElementMustNotBeSrored()
         {
             AVL<int, string> avl = new AVL<int, string>();
             string expected = null;
@@ -356,7 +344,7 @@ namespace xUnitAVLTree
 
         //Проверка индексатора на get по ключу, где задано значение
         [Fact]
-        public void Test25()
+        public void GettingValueByKeyWhenValueMustBeStored()
         {
             AVL<int, string> avl = new AVL<int, string>();
             string expected = "a";
@@ -366,7 +354,7 @@ namespace xUnitAVLTree
 
         //Проверка индексатора на get по ключу, где не задано значение
         [Fact]
-        public void Test26()
+        public void GettingValueByKeyWhenValueMustNotBeStoredAndThrowingKeyNotFoundException()
         {
             AVL<int, string> avl = new AVL<int, string>();
             avl.Insert(0, "A");
@@ -379,7 +367,7 @@ namespace xUnitAVLTree
 
         //Проверка индексатора на set по ключу, где значение задано
         [Fact]
-        public void Test27()
+        public void SettingValueByKeyWhenValueMustBeStored()
         {
             AVL<int, string> avl = new AVL<int, string>();
             string expected = "b";
@@ -390,7 +378,7 @@ namespace xUnitAVLTree
 
         //Проверка индексатора на set по ключу, где значение не задано
         [Fact]
-        public void Test28()
+        public void SettingValueByKeyWhenValueMustNotBeStoredAndThrowingKeyNotFoundException()
         {
             AVL<int, string> avl = new AVL<int, string>();
             avl.Insert(0, "A");
@@ -403,7 +391,7 @@ namespace xUnitAVLTree
 
         //После обхода пустого дерева, количество найденных элементов должно быть 0
         [Fact]
-        public void Test29()
+        public void AfterTraversalInEmptyTreeCountOfDiscoveredItemsMustBeZero()
         {
             AVL<int, string> avl = new AVL<int, string>();
 
@@ -421,7 +409,7 @@ namespace xUnitAVLTree
 
         //Проверка всех вариантов на set (одиночный лист, корень дерева, два потомка, без потомков)
         [Fact]
-        public void Test30()
+        public void SettingValueByKeyInDifferentSituations()
         {
             AVL<int, string> avl = new AVL<int, string>();
             avl.Insert(2, "c");
@@ -450,7 +438,7 @@ namespace xUnitAVLTree
 
         //Проверка на удаление элементов, где левое-левое поддерево перевешивает
         [Fact]
-        public void Test31()
+        public void RemovingItemsWhenLeftLeftSubtreeIsBig()
         {
             List<AVL<int, int>> avls = new List<AVL<int, int>>();
             for (int i = 0; i < 9; i++)
@@ -487,8 +475,10 @@ namespace xUnitAVLTree
             }
         }
 
+
+        //Проверка на удаление элементов, где левое-правое поддерево перевешивает
         [Fact]
-        public void Test32()
+        public void RemovingItemsWhenLeftRightSubtreeIsBig()
         {
             List<AVL<int, int>> avls = new List<AVL<int, int>>();
             for (int i = 0; i < 9; i++)
@@ -525,8 +515,9 @@ namespace xUnitAVLTree
             }
         }
 
+        //Проверка на удаление элементов, где правое-левое поддерево перевешивает
         [Fact]
-        public void Test33()
+        public void RemovingItemsWhenRightLeftSubtreeIsBig()
         {
             List<AVL<int, int>> avls = new List<AVL<int, int>>();
             for (int i = 0; i < 9; i++)
@@ -563,8 +554,9 @@ namespace xUnitAVLTree
             }
         }
 
+        //Проверка на удаление элементов, где правое-правое поддерево перевешивает
         [Fact]
-        public void Test34()
+        public void RemovingItemsWhenRightRightSubtreeIsBig()
         {
             List<AVL<int, int>> avls = new List<AVL<int, int>>();
             for (int i = 0; i < 9; i++)
