@@ -48,7 +48,6 @@
   <ItemGroup>
     <Compile Include="AVLTreeClass.cs" />
     <Compile Include="ExceptionsClass.cs" />
-    <Compile Include="ITree.cs" />
     <Compile Include="NodeClass.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TreeNodePrinter.cs" />

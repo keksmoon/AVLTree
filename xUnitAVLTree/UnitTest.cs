@@ -13,7 +13,7 @@ namespace xUnitAVLTree
         {
             AVL<int, string> avl = new AVL<int, string>();
 
-            Assert.Equal(0, avl.Count());
+            Assert.Equal(0, avl.Count);
         }
 
         //При добавлении элемента в дерево количество элементов +1.
@@ -21,9 +21,9 @@ namespace xUnitAVLTree
         public void Test2()
         {
             AVL<int, string> avl = new AVL<int, string>();
-            int oldItemsCountInAVL = avl.Count();
+            int oldItemsCountInAVL = avl.Count;
             avl.Insert(0, "A");
-            int newItemsCountInAVL = avl.Count();
+            int newItemsCountInAVL = avl.Count;
 
             Assert.Equal(oldItemsCountInAVL + 1, newItemsCountInAVL);
         }
@@ -437,11 +437,11 @@ namespace xUnitAVLTree
             string expected_e4 = "ee";
             string expected_f5 = "ff";
             string[] massivexpected = { expected_a0, expected_b1, expected_c2, expected_d3, expected_e4,expected_f5 };
-            for (int i = 0; i < avl.Count(); i++)
+            for (int i = 0; i < avl.Count; i++)
             {
                 avl[i] = avl[i] + avl[i];
             }
-            for (int i = 0; i < avl.Count(); i++)
+            for (int i = 0; i < avl.Count; i++)
             {
                 Assert.Equal(avl[i], massivexpected[i]);
             }

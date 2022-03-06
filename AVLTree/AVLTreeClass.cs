@@ -6,23 +6,16 @@ namespace AVLTree
     /// <summary>
     /// Дерево Адельсона-Вельского и Ландиса.
     /// </summary>
-    public class AVL<TKey, TValue> : ITree<TKey, TValue>
-        where TKey :  IComparable<TKey>
+    public class AVL<TKey, TValue> where TKey : IComparable<TKey>
     {
         public Node<TKey, TValue> Root { get; private set; }
 
-        public AVL()
-        {
-            Root = null; 
-            count = 0; 
-        }
-
-        private int count;
+        public AVL() => Root = null;
 
         /// <summary>
         /// Количество элементов в АВЛ дереве.
         /// </summary>
-        public int Count() => count;
+        public int Count { get; private set; } = 0;
 
         /// <summary>
         /// Возвращает высоту выбранного поддерева. 
@@ -43,7 +36,7 @@ namespace AVLTree
         public void Clear()
         {
             Root = null;
-            count = 0;
+            Count = 0;
         }
 
         /// <summary>
@@ -95,7 +88,7 @@ namespace AVLTree
                 BalanceTree(parentNode);
             }
 
-            count++;
+            Count++;
         }
 
         /// <summary>
@@ -199,8 +192,7 @@ namespace AVLTree
                 }
 
                 successorNodeParent = successorNode.Parent;
-            }
-            else if (successorNode.Right != null)
+            } else if (successorNode.Right != null)
             {
                 successorNode = successorNode.Right;
 
@@ -210,8 +202,7 @@ namespace AVLTree
                 }
 
                 successorNodeParent = successorNode.Parent;
-            }
-            else
+            } else
             {
                 successorNode = null;
             }
@@ -221,7 +212,7 @@ namespace AVLTree
             if (successorNodeParent != null)
                 successorNodeParent.RecalculateHeight();
 
-            count--;
+            Count--;
         }
 
         /// <summary>
@@ -369,11 +360,11 @@ namespace AVLTree
             newNode.Parent = node.Parent;
 
             if (node.Parent == null)
-            {
+            { 
                 Root = newNode;
             }
             else if (node == node.Parent.Right)
-            {
+            { 
                 node.Parent.Right = newNode;
             }
             else
@@ -428,8 +419,8 @@ namespace AVLTree
                         children.Add(currentNode);
                         currentNode = currentNode.Right;
                     }
-                }
-            }
+                } 
+            } 
 
             return children;
         }
