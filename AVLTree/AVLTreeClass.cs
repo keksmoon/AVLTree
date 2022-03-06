@@ -382,29 +382,47 @@ namespace AVLTree
         /// <summary>
         /// Выполняет прямой обход дерева.
         /// </summary>
-        /// <returns>Возвращает список узлов.</returns>
+        /// <param name="node">Поддерево для обхода</param>
         public IEnumerable<Node<TKey, TValue>> InorderTraversal()
         {
-            var nodes = new List<Node<TKey, TValue>>();
+            var children = new List<Node<TKey, TValue>>();
 
-            InorderTraversal(Root, nodes);
+            Node<TKey, TValue> currentNode, previousNode;
 
-            return nodes;
-        }
-
-        /// <summary>
-        /// Обход дерева
-        /// </summary>
-        /// <param name="node">Вершина</param>
-        /// <param name="children">Коллекция обхода</param>
-        internal void InorderTraversal(Node<TKey, TValue> node, List<Node<TKey, TValue>> children)
-        {
-            if (node != null)
+            if (Root == null)
             {
-                InorderTraversal(node.Left, children);
-                children.Add(node);
-                InorderTraversal(node.Right, children);
+                return children;
             }
+
+            currentNode = Root;
+            while (currentNode != null)
+            {
+                if (currentNode.Left == null)
+                {
+                    children.Add(currentNode);
+                    currentNode = currentNode.Right;
+                }
+                else
+                {
+                    previousNode = currentNode.Left;
+                    while (previousNode.Right != null && previousNode.Right != currentNode)
+                        previousNode = previousNode.Right;
+
+                    if (previousNode.Right == null)
+                    {
+                        previousNode.Right = currentNode;
+                        currentNode = currentNode.Left;
+                    }
+                    else
+                    {
+                        previousNode.Right = null;
+                        children.Add(currentNode);
+                        currentNode = currentNode.Right;
+                    }
+                } 
+            } 
+
+            return children;
         }
 
         /// <summary>
