@@ -7,16 +7,16 @@ namespace AVLTree
     /// </summary>
     /// <typeparam name="TKey">Ключ вершины.</typeparam>
     /// <typeparam name="TValue">Значение вершины.</typeparam>
-    public class Node<TKey, TValue>
+    public class Node<TKey, TValue> 
     {
-        public TKey Key { get; internal set; } 
-        public TValue Value { get; internal set; }
+        public TKey Key { get; set; } 
+        public TValue Value { get;  set; }
 
-        public Node<TKey, TValue> Parent { get; internal set; }
-        public Node<TKey, TValue> Left { get; internal set; }
-        public Node<TKey, TValue> Right { get; internal set; }
+        public Node<TKey, TValue> Parent { get; set; }
+        public Node<TKey, TValue> Left { get;  set; }
+        public Node<TKey, TValue> Right { get;  set; }
 
-        public int Height { get; internal set; } = 1;
+        public int Height { get; set; } = 1;
 
         public Node(TKey key, TValue value)
         {
@@ -63,7 +63,7 @@ namespace AVLTree
                     currentNode.Height = maxHeight;
                 }
 
-                currentNode = currentNode.Parent;
+                //currentNode = currentNode.Parent;
             }
         }
 
