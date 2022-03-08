@@ -239,7 +239,7 @@ namespace AVLTree
         /// </summary>
         /// <param name="key"></param>
         /// <returns>Если узел найден, то возращает узел. В противном случае родительский узел.</returns>
-        private Node<TKey, TValue> Find(TKey key)
+        internal Node<TKey, TValue> Find(TKey key)
         {
             var current = Root;
             while (current != null)

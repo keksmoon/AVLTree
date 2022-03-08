@@ -33,6 +33,7 @@ namespace xUnitAVLTree
         public void ThrowingDuplicationItemsInTreeException()
         {
             AVL<int, string> avl = new AVL<int, string>();
+            
             avl.Insert(0, "A");
 
             Assert.Throws<DuplicationItemsInTreeException>(() =>
@@ -592,5 +593,6 @@ namespace xUnitAVLTree
                 keyValues.Add(i);
             }
         }
+
     }
 }
