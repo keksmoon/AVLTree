@@ -464,7 +464,7 @@ namespace xUnitAVLTree
             {
                 avls[i].Remove(i);
                 keyValues.Remove(i);
-                keyValues.Sort();
+               
                 var q = avls[i].InorderTraversal();
                 int k = 0;
                 foreach (var j in q)
@@ -473,6 +473,8 @@ namespace xUnitAVLTree
                     k++;
                 }
                 keyValues.Add(i);
+
+                keyValues.Sort();
             }
         }
 
@@ -593,6 +595,30 @@ namespace xUnitAVLTree
                 keyValues.Add(i);
             }
         }
+
+        // В процессе удаления элементов дерево должно балансироваться
+        [Theory]
+        [InlineData(1)]
+        [InlineData(-1)]
+        public void BalanceTreeAfterItemsRemoveEverySubTree(int sub)
+        {
+            AVL<int, int> avl = new AVL<int, int>();
+
+            avl.Insert(sub * 5, 0);
+            avl.Insert(sub * 2, 0);
+            avl.Insert(sub * 7, 0);
+            avl.Insert(sub * 1, 0);
+            avl.Insert(sub * 3, 0);
+            avl.Insert(sub * 6, 0);
+            avl.Insert(sub * 8, 0);
+            avl.Remove(sub * 1);
+            avl.Remove(sub * 3);
+            avl.Remove(sub * 2);
+            avl.Remove(sub * 5);
+
+            Assert.Equal(2, avl.Height());
+        }
+
 
     }
 }
