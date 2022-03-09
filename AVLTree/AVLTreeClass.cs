@@ -212,11 +212,6 @@ namespace AVLTree
             if (successorNodeParent != null)
                 successorNodeParent.RecalculateHeight();
 
-            if (removableNode.Parent != null)
-                removableNode.Parent.RecalculateHeight();
-
-            BalanceTree(removableNode.Parent);
-
             Count--;
         }
 
