@@ -174,7 +174,7 @@ namespace AVLTree
             //    И пересчет от узла, который был заменен
             var removableNode = Find(key);
 
-            if (removableNode.Key.CompareTo(key) != 0)
+            if (removableNode == null || removableNode.Key.CompareTo(key) != 0)
             {
                 throw new KeyNotFoundException();
             }
@@ -224,7 +224,7 @@ namespace AVLTree
         public bool TryGetValue(TKey key, out TValue value)
         {
             Node<TKey, TValue> current = Find(key);
-            if (current.Key.CompareTo(key) != 0)
+            if (current == null || current.Key.CompareTo(key) != 0)
             {
                 value = default(TValue);
                 return false;
