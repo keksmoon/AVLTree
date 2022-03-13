@@ -1,19 +1,4 @@
 # AVLTree
-ЯрГУ, МП, #2
 
----
-### Совместная конференция 26 февраля:
-1. **Выполнено:** 
-	  * Реализованы методы RotateLeft, RotateRight
-2. **Задание:** 
-	  * ~~подумать над реализацией "_пересчета_" высот.~~  
----
-### Совместная конференция 27 февраля:
-1. **Выполнено:**
-	* Реализован метод BalanceTree  
-	  Балансировка работает за логарифмическое время за счет метода RecalculateHeights
-	* Реализован метод bool TryGetValue(TKey key, out TValue value);  
-	* Реализован индексатор коллекции  
-1. **Задание:**  
-	* Реализовать метод Remove.
-	  
+Comparative operating time of the main methods of our AVL tree and the built-in sorted dictionary:
+![ex](https://user-images.githubusercontent.com/58748199/158078111-67224ed9-9229-4a9f-95b9-de32cb2e4f84.png)
