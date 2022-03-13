@@ -76,6 +76,7 @@ namespace MyApp
                 "Adding:\t\t + [int: newItemKey] [any: newItemValue] \n" +
                 "Removing:\t - [int: itemKey] \n" +
                 "Find:\t\t ? [int: itemKey] \n" +
+                "Clear: \t\t c \n" +
                 "Quit:\t\t q");
 
 
@@ -181,6 +182,19 @@ namespace MyApp
                                 TreeNodePrinter.Print(avl.Root, itemKey: itemKey);
                             }
                         }
+                        break;
+                    case "q":
+                        return;
+                    case "c":
+                        Console.Clear();
+                        Console.WriteLine("Hello! I can execute the following commands: \n" +
+                            "Adding:\t\t + [int: newItemKey] [any: newItemValue] \n" +
+                            "Removing:\t - [int: itemKey] \n" +
+                            "Find:\t\t ? [int: itemKey] \n" +
+                            "Clear: \t\t c \n" +
+                            "Quit:\t\t q");
+
+                        TreeNodePrinter.Print(avl.Root);
                         break;
                     default:
                         Console.WriteLine("Error command!");

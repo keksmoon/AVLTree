@@ -14,7 +14,7 @@ namespace AVLTree
     }
     public static class TreeNodePrinter
     {
-        public static void Print<TKey, TValue>(this Node<TKey, TValue> root, int topMargin = 2, int leftMargin = 2, int itemKey = 0)
+        public static void Print<TKey, TValue>(this Node<TKey, TValue> root, int topMargin = 2, int leftMargin = 2, int itemKey = 14032022)
         {
             if (root == null) return;
             int rootTop = Console.CursorTop + topMargin;
@@ -69,7 +69,7 @@ namespace AVLTree
             Console.SetCursorPosition(0, rootTop + 2 * last.Count - 1);
         }
 
-        private static void Print<TKey, TValue>(NodeInfo<TKey, TValue> item, int top, int itemKey = 0, bool iKey = false)
+        private static void Print<TKey, TValue>(NodeInfo<TKey, TValue> item, int top, int itemKey = 14032022, bool iKey = false)
         {
             if (item.Node.Key.Equals(itemKey))
                 iKey = true;
@@ -82,14 +82,14 @@ namespace AVLTree
                 PrintLink(top + 1, "└", "┐", item.EndPos - 1, item.Right.StartPos + item.Right.Size / 2, itemKey: itemKey, iKey: iKey);
         }
 
-        private static void PrintLink(int top, string start, string end, int startPos, int endPos, int itemKey = 0, bool iKey = false)
+        private static void PrintLink(int top, string start, string end, int startPos, int endPos, int itemKey = 14032022, bool iKey = false)
         {
             Print(start, top, startPos, itemKey: itemKey, iKey: iKey);
             Print("─", top, startPos + 1, endPos, itemKey: itemKey, iKey: iKey);
             Print(end, top, endPos, itemKey: itemKey, iKey: iKey);
         }
 
-        private static void Print(string s, int top, int left, int right = -1, int itemKey = 0, bool iKey = false)
+        private static void Print(string s, int top, int left, int right = -1, int itemKey = 14032022, bool iKey = false)
         {
             top -= 1;
             Console.SetCursorPosition(left, top);
